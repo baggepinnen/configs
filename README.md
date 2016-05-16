@@ -1,5 +1,6 @@
 # configs
 
+## Fix tex memory
 In TeX Live, you can modify /some/path/to/texlive/some/subpath/web2c/texmf.cnf, which can be found by typing on the terminal:
 
 kpsewhich -a texmf.cnf 
