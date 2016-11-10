@@ -22,6 +22,7 @@ apm install latex
 apm install minimap
 apm install pdf-view
 apm install jude
+apm install atom-alignment
 
 apm install duotone-dark-earth-syntax
 apm install rusty-dark-syntax
