@@ -1,0 +1,83 @@
+# Your snippets
+#
+# Atom snippets allow you to enter a simple prefix in the editor and hit tab to
+# expand the prefix into a larger code block with templated values.
+#
+# You can create a new snippet in this file by typing "snip" and then hitting
+# tab.
+#
+# An example CoffeeScript snippet to expand log to console.log:
+#
+# '.source.coffee':
+#   'Console log':
+#     'prefix': 'log'
+#     'body': 'console.log $1'
+#
+# Each scope (e.g. '.source.coffee' above) can only be declared once.
+#
+# This file uses CoffeeScript Object Notation (CSON).
+# If you are unfamiliar with CSON, you can read more about it in the
+# Atom Flight Manual:
+# https://atom.io/docs/latest/using-atom-basic-customization#cson
+
+
+'.text.tex.latex':
+  'includegraphics':
+    'prefix': 'includegraphics'
+    'body': '\\\\includegraphics[width=$1\\\\linewidth]{$2}'
+
+  'dfrac':
+    'prefix': 'fraction'
+    'body': '\\\\dfrac{$1}{$2}'
+
+  'dot':
+    'prefix': 'dot'
+    'body': '\\\\dot{$1}$2'
+
+  'emph':
+    'prefix': 'emph'
+    'body': '\\\\emph{$1}$2'
+
+  'note':
+    'prefix': 'note'
+    'body': '\\\\note{$1}'
+
+  'footnote':
+    'prefix': 'footnote'
+    'body': '\\\\footnote{$1}'
+
+  'italics':
+    'prefix': 'italics'
+    'body': '\\\\textit{$1}$2'
+
+  'bold':
+    'prefix': 'bold'
+    'body': '\\\\textbf{$1}$2'
+
+  'figure':
+    'prefix': 'figure'
+    'body': '\\\\begin{figure}[htp]\n\t\\\\centering\n\t\\\\includegraphics[width=$1\\\\linewidth]{$2}\n\t\\\\caption{$3}\n\t\\\\label{$4}\n\\\\end{figure}'
+
+  'frame':
+    'prefix': 'frame'
+    'body': '%====================================================================\n%====================================================================\n\\\\begin{frame}{$1}{$2}\n\\\\end{frame}\n'
+
+  'Cref':
+    'prefix': 'cref'
+    'body': '~\\\\cref{$1:$2}'
+
+  'block':
+    'prefix': 'block'
+    'body': '\\\\begin{block}{$1}\n\\\\end{block}\n'
+
+  'align':
+    'prefix': 'align'
+    'body': '\\\\begin{align$1}\n$2\\\\end{align$1}\n'
+
+  'usepackage':
+    'prefix': 'usepackage'
+    'body': '\\\\usepackage{$1}'
+
+  'Comment':
+      'prefix': 'comm'
+      'body': '\\\\cmt{$1}'
