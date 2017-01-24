@@ -12,3 +12,6 @@ main_memory = 8000000
 Then run the following command (maybe as root, not always needed) to recreate the format files:
 
 fmtutil-sys --all
+
+## Okular
+Editor command: `/usr/bin/atom "%f:%l"`
