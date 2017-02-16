@@ -13,6 +13,7 @@ apm install julia-client
 apm install language-julia
 apm install latex-completions
 apm install project-manager
+apm install language-weave
 
 apm install hydrogen
 apm install auto-indent
