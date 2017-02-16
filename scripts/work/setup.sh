@@ -15,7 +15,6 @@ apm install latex-completions
 apm install project-manager
 apm install language-weave
 
-apm install hydrogen
 apm install auto-indent
 apm install highlight-selected
 apm install language-latex
