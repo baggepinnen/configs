@@ -1,3 +1,4 @@
+Pkg.add("PyCall")
 Pkg.add("Plots")
 Pkg.add("PyPlot")
 Pkg.add("PlotlyJS")
