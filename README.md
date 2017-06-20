@@ -15,3 +15,11 @@ fmtutil-sys --all
 
 ## Okular
 Editor command: `/usr/bin/atom "%f:%l"`
+
+
+## Build sys image
+`userimage.jl` Can contain statements such as `using Plots` for `Plots` to be included at startup.
+```julia
+include(joinpath(JULIA_HOME, Base.DATAROOTDIR, "julia", "build_sysimg.jl"))
+build_sysimg(default_sysimg_path(), "native", "userimage.jl", force=true)
+```
