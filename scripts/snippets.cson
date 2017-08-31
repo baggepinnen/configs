@@ -20,7 +20,10 @@
 # Atom Flight Manual:
 # https://atom.io/docs/latest/using-atom-basic-customization#cson
 
-# '.source.julia':
+'.source.weave.md':
+  'julia':
+    'prefix': 'julia'
+    'body': '```julia\n$1\n```'
 
 '.string.docstring.julia':
   'docref':
@@ -40,13 +43,18 @@
       'prefix': 'julia'
       'body': '```julia\n$1\n```'
 
+'.source.julia':
+  'TODO':
+    'prefix': 'todo'
+    'body': '# TODO: $1'
+
 '.text.tex.latex':
   'includegraphics':
     'prefix': 'includegraphics'
     'body': '\\\\includegraphics[width=$1\\\\linewidth]{$2}'
 
   'dfrac':
-    'prefix': 'fraction'
+    'prefix': 'dfrac'
     'body': '\\\\dfrac{$1}{$2}'
 
   'dot':

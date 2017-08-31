@@ -3,7 +3,8 @@
 ENV["BRIDGE_PATH"] = ""
 
 using Plots
-gr()
+pyplot(show=true)
+# gr()
 # pyplot()
 # default(color_palette=[
 # RGB{U8}(0.1,0.7,1.0),
@@ -22,6 +23,9 @@ default(markerstrokealpha=0.5)
 
 # default(color_palette=:hsv)
 
+
+showfull(io, x) = show(IOContext(io; compact = false, limit = false), x)
+showfull(x) = showfull(STDOUT, x)
 
 
 rms(x) = sqrt(mean(x.^2))
