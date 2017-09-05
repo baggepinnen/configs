@@ -3,7 +3,7 @@
 ENV["BRIDGE_PATH"] = ""
 
 using Plots
-pyplot(show=true)
+pyplot(size=(800,700), show=true)
 # gr()
 # pyplot()
 # default(color_palette=[
@@ -83,7 +83,7 @@ end
 #     close(f)
 # end
 
-# JULIA_SVG_BROWSER = "Google Chrome.app"
+
 
 
 function printpng(fig = current())
@@ -150,3 +150,22 @@ end
 #     Pkg.build("TensorFlow")
 #     exit()
 # end
+#
+#
+# # function update_plot(p; max_history = 10, attribute = :markercolor)
+# #     num_series = length(p.series_list)
+# #     if num_series > 1
+# #         if num_series > max_history
+# #             deleteat!(p.series_list,1:num_series-max_history)
+# #         end
+# #         for i = 1:max_history-1
+# #             alpha = 1-1/max_history
+# #             c = p[i][attribute]
+# #             c.b = alpha*c.b + (1-alpha)*0.5
+# #             c.g = alpha*c.g + (1-alpha)*0.5
+# #             c.r = alpha*c.r + (1-alpha)*0.5
+# #             p[i][attribute] = c
+# #         end
+# #     end
+# #
+# # end
