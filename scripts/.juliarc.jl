@@ -176,13 +176,12 @@ end
 
 Print packages which are preventing `held_back_package` from being updated. `recursive > 0` will go deeper.
 """
-
 function find_holdback(held_back_package, recursive = 0, installed = collect(keys(Pkg.installed())), inset=0)
     @assert held_back_package ∈ installed "The package you are querying is not installed"
     for package in installed
         REQUIRE = Pkg.dir(package, "REQUIRE")
         for line in eachline(REQUIRE)
-            if contains(line, held_back_package)
+            if split(line, ' ')[1] ==  held_back_package
                 for i = 1:inset print("    ") end
                 @printf("Package %-50s requires %s\n", package, line)
                 if recursive > 0
