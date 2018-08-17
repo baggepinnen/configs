@@ -35,3 +35,7 @@
 'atom-text-editor':
     'ctrl-.': 'spell-check:correct-misspelling'
     'ctrl-b': 'tree-view:toggle'
+    'ctrl-/': 'tree-view:reveal-active-file'
+
+'atom-text-editor[data-grammar="source julia"]':
+  'f9': 'julia-debug:step-to-next-line'
