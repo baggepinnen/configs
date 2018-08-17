@@ -47,6 +47,14 @@
   'TODO':
     'prefix': 'todo'
     'body': '# TODO: $1'
+  'iter':
+    'prefix': 'iter'
+    'body': 'Base.start($1::$2) = 1\nBase.next($1::$2, state) = ($3,state+1)\nBase.done($1::$2, state) = state == legnth($4)\nBase.length($1::$2)\n'
+
+  'esc':
+    'prefix': 'esc'
+    'body': '\$(esc($1))$2'
+
 
 '.text.tex.latex':
   'includegraphics':
@@ -117,3 +125,13 @@
   'julia':
       'prefix': 'julia'
       'body': '\\\\begin{algorithm}\n\\\\caption{$1}\n\\\\label{alg:$2}\n\\\\begin{minted}[breaklines,escapeinside=||,mathescape=true, linenos, numbersep=3pt, gobble=2, frame=lines, fontsize=\\\\small, framesep=2mm]{julia}\n$3\\\\end{minted}'
+  'columns':
+      'prefix': 'columns'
+      'body':
+        '    \\\\begin{columns}\n
+                \t\\\\begin{column}{0.5\\\\textwidth}\n
+                \t\\\\end{column}\n
+                \t\\\\begin{column}{0.5\\\\textwidth}\n
+                \t\\\\end{column}\n
+            \\\\end{columns}\n
+        '
