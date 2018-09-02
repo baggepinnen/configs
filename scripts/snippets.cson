@@ -124,7 +124,7 @@
 
   'julia':
       'prefix': 'julia'
-      'body': '\\\\begin{algorithm}\n\\\\caption{$1}\n\\\\label{alg:$2}\n\\\\begin{minted}[breaklines,escapeinside=||,mathescape=true, linenos, numbersep=3pt, gobble=2, frame=lines, fontsize=\\\\small, framesep=2mm]{julia}\n$3\\\\end{minted}'
+      'body': '\\\\begin{algorithm}\n\\\\caption{$1}\n\\\\label{alg:$2}\n\\\\begin{minted}[breaklines,escapeinside=||,mathescape=true, linenos, numbersep=3pt, gobble=2, frame=lines, fontsize=\\\\small, framesep=2mm]{julia}\n$3\\\\end{minted}\n\\\\end{algorithm}'
   'columns':
       'prefix': 'columns'
       'body':
