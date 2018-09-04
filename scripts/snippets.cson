@@ -20,6 +20,12 @@
 # Atom Flight Manual:
 # https://atom.io/docs/latest/using-atom-basic-customization#cson
 
+
+'.source.toml':
+  'author':
+    'prefix':'author'
+    'body':'author = "Fredrik Bagge Carlson <baggepinnen@gmail.com>"'
+
 '.source.weave.md':
   'julia':
     'prefix': 'julia'
@@ -44,11 +50,36 @@
       'body': '```julia\n$1\n```'
 
 '.source.julia':
+  'logspace':
+    'prefix': 'logspace'
+    'body': 'exp10.(range($1, stop=$2, length=$3))$4'
+
+  'linspace':
+    'prefix': 'logspace'
+    'body': 'range($1, stop=$2, length=$3)$4'
+
+  'eye':
+    'prefix': 'eye'
+    'body': 'Matrix{Float64}(I, $1, $1)$2'
+
   'TODO':
     'prefix': 'todo'
     'body': '# TODO: $1'
 
+  'iter':
+    'prefix': 'iter'
+    'body': 'function Base.iterate($1::$2, state=$3)\nstate == legnth($4) && return nothing\n ($3,state+1)\nend\nBase.length($1::$2)\n'
+
+  'esc':
+    'prefix': 'esc'
+    'body': '\$(esc($1))$2'
+
+
 '.text.tex.latex':
+  'label':
+    'prefix': 'label'
+    'body': '\\\\label{$1:$2} $3'
+
   'includegraphics':
     'prefix': 'includegraphics'
     'body': '\\\\includegraphics[width=$1\\\\linewidth]{$2}'
@@ -117,3 +148,13 @@
   'julia':
       'prefix': 'julia'
       'body': '\\\\begin{algorithm}\n\\\\caption{$1}\n\\\\label{alg:$2}\n\\\\begin{minted}[breaklines,escapeinside=||,mathescape=true, linenos, numbersep=3pt, gobble=2, frame=lines, fontsize=\\\\small, framesep=2mm]{julia}\n$3\\\\end{minted}'
+  'columns':
+      'prefix': 'columns'
+      'body':
+        '    \\\\begin{columns}\n
+                \t\\\\begin{column}{0.5\\\\textwidth}\n
+                \t\\\\end{column}\n
+                \t\\\\begin{column}{0.5\\\\textwidth}\n
+                \t\\\\end{column}\n
+            \\\\end{columns}\n
+        '
