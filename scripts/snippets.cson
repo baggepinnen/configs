@@ -55,7 +55,7 @@
     'body': 'exp10.(range($1, stop=$2, length=$3))$4'
 
   'linspace':
-    'prefix': 'logspace'
+    'prefix': 'linspace'
     'body': 'range($1, stop=$2, length=$3)$4'
 
   'eye':
