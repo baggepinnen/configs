@@ -1,0 +1,3 @@
+meld scripts/snippets.cson ~/.atom/snippets.cson
+meld scripts/keymap.cson ~/.atom/keymap.cson
+
