@@ -30,6 +30,7 @@
     'ctrl-r': 'editor:toggle-line-comments'
     'ctrl-b': 'tree-view:toggle'
     'ctrl-shift-s': 'symbols-view:toggle-file-symbols'
+    'ctrl-*': 'custom:hide-docs'
 
 
 'atom-text-editor':
