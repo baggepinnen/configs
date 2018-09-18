@@ -54,7 +54,11 @@
       'body': '```julia\n$1\n```'
 
 '.source.julia':
-  
+
+  'pkgdir':
+    'prefix': 'pkgdir'
+    'body': 'joinpath(dirname(pathof($1)), "$2")$3'
+
   'logspace':
     'prefix': 'logspace'
     'body': 'exp10.(range($1, stop=$2, length=$3))$4'
