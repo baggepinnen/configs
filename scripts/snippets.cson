@@ -131,7 +131,11 @@
 
   'Cref':
     'prefix': 'cref'
-    'body': '~\\\\cref{$1:$2}'
+    'body': '\\\\cref{$1}'
+
+  'Labelcref':
+    'prefix': 'labelcref'
+    'body': '\\\\labelcref{$1}'
 
   'block':
     'prefix': 'block'
