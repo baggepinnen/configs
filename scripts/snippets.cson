@@ -77,7 +77,7 @@
 
   'iter':
     'prefix': 'iter'
-    'body': 'function Base.iterate($1::$2, state=$3)\nstate == legnth($4) && return nothing\n ($3,state+1)\nend\nBase.length($1::$2)\n'
+    'body': 'function Base.iterate($1::$2, state=$3)\n    state == length($4) && return nothing\n     ($3,state+1)\nend\nBase.length($1::$2) = $5\n'
 
   'esc':
     'prefix': 'esc'
@@ -158,9 +158,13 @@
       'prefix': 'tt'
       'body': '\\\\texttt{$1}'
 
-  'julia':
-      'prefix': 'julia'
-      'body': '\\\\begin{algorithm}\n\\\\caption{$1}\n\\\\label{alg:$2}\n\\\\begin{minted}[breaklines,escapeinside=||,mathescape=true, linenos, numbersep=3pt, gobble=2, frame=lines, fontsize=\\\\small, framesep=2mm]{julia}\n$3\\\\end{minted}\n\\\\end{algorithm}'
+  'juliaalg':
+      'prefix': 'juliaalg'
+      'body': '\\\\begin{algorithm}\n\\\\caption{$1}\n\\\\label{alg:$2}\n\\\\begin{minted}[breaklines,escapeinside=||,mathescape=true, numbersep=3pt, gobble=0, fontsize=\\\\small, framesep=2mm]{julia}\n$3\\\\end{minted}\n\\\\end{algorithm}'
+
+    'julia':
+        'prefix': 'julia'
+        'body': '\\\\begin{minted}[breaklines,escapeinside=||,mathescape=true, numbersep=3pt, gobble=0, frame=lines, fontsize=\\\\small, framesep=2mm]{julia}\n$3\\\\end{minted}\n'
   'columns':
       'prefix': 'columns'
       'body':
