@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Command to clear build directory, copy this file to the correct folder and then build a test document
-rm /tmp/test.pdf; rm -rf /tmp/build/*; sudo cp ~/atomone.py /lib64/python2.7/site-packages/pygments/styles/.;lualatex --output-directory=build --shell-escape test.tex; okular build/test.pdf
+rm /tmp/test.pdf; rm -rf /tmp/build/*; sudo cp ~/atomone.py /usr/lib/python3.6/site-packages/pygments/styles/.;lualatex --shell-escape --output-directory=build test.tex; okular build/test.pdf
 """
 
 from pygments.style import Style
@@ -17,28 +17,28 @@ class AtomoneStyle(Style):
     background_color = '#f0f3f3'
 
     styles = {
-        Whitespace:         '#FF0000',
+        Whitespace:         '#bbbbbb',
         Comment:            'italic #A2A2A2',
         Comment.Preproc:    'noitalic #A2A2A2',
         Comment.Special:    'bold',
 
         Keyword:            'bold #AD00AC', # function, for, if
         Keyword.Pseudo:     'nobold',
-        Keyword.Type:       '#0098A7', # This is used for Typenames and function names
+        Keyword.Type:       '#008491',
 
-        Operator:           '#0098A7',
+        Operator:           '#555555',
         Operator.Word:      'bold #FF0000',# Does not seem to be used
 
-        Name.Builtin:       '#0098A7',
-        Name.Function:      '#0098A7',
-        Name.Class:         'bold #0098A7',
+        Name.Builtin:       '#008491', # Both these should be set to same
+        Name.Function:      '#008491', # Both these should be set to same
+        Name.Class:         'bold #000000',
         Name.Namespace:     'bold #FF0000',# Does not seem to be used
         Name.Exception:     'bold #CC0000',
-        Name.Variable:      '#FF0000',
-        Name.Constant:      '#FF0000',
+        Name.Variable:      '#000000',
+        Name.Constant:      '#000000',
         Name.Label:         '#FF0000',
-        Name.Entity:        'bold #0098A7',
-        Name.Attribute:     '#FF0000',
+        Name.Entity:        'bold #999999',
+        Name.Attribute:     '#330000',
         Name.Tag:           'bold #FF0000',
         Name.Decorator:     '#9999FF',
 
@@ -56,12 +56,12 @@ class AtomoneStyle(Style):
         Generic.Subheading: 'bold #003300',
         Generic.Deleted:    'border:#CC0000 bg:#FFCCCC',
         Generic.Inserted:   'border:#00CC00 bg:#CCFFCC',
-        Generic.Error:      '#FF0000',
+        Generic.Error:      '#D60000',
         Generic.Emph:       'italic',
         Generic.Strong:     'bold',
-        Generic.Prompt:     'bold #000099',
-        Generic.Output:     '#FF0000',
-        Generic.Traceback:  '#99CC66',
+        Generic.Prompt:     'bold #078600',
+        Generic.Output:     '#787878',
+        Generic.Traceback:  '#787878',
 
         Error:              'bg:#FFAAAA #AA0000'
     }
