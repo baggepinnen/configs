@@ -42,3 +42,17 @@
 
 'atom-text-editor[data-grammar="source julia"]':
   'f9': 'julia-debug:step-to-next-line'
+
+
+'.platform-linux .item-views > atom-text-editor[data-grammar="text md"]':
+  'ctrl-enter': 'julia-client:run-block'
+  'shift-enter': 'julia-client:run-and-move'
+  'ctrl-shift-enter': 'julia-client:run-file'
+  'alt-enter': 'julia-client:run-cell'
+  'alt-shift-enter': 'julia-client:run-cell-and-move'
+  'alt-down': 'julia-client:next-cell'
+  'alt-up': 'julia-client:prev-cell'
+  'ctrl-j ctrl-m': 'julia-client:set-working-module'
+  'ctrl-shift-c': 'julia-client:interrupt-julia'
+  'ctrl-j ctrl-d': 'julia-client:show-documentation'
+  'ctrl-j ctrl-g': 'julia-client:goto-symbol'
