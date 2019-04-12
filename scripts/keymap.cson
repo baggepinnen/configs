@@ -41,7 +41,12 @@
     'ctrl-/': 'tree-view:reveal-active-file'
 
 'atom-text-editor[data-grammar="source julia"]':
+  'f8': 'julia-debug:step-to-selected-line'
   'f9': 'julia-debug:step-to-next-line'
+  'f10': 'julia-debug:step-to-next-expression'
+  'f11': 'julia-debug:step-into-function'
+  'f12': 'julia-debug:finish-function'
+  'f5': 'julia-debug:continue'
 
 
 '.platform-linux .item-views > atom-text-editor[data-grammar="text md"]':
