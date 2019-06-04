@@ -2,6 +2,8 @@
 """
 Command to clear build directory, copy this file to the correct folder and then build a test document
 rm /tmp/test.pdf; rm -rf /tmp/build/*; sudo cp ~/atomone.py /usr/lib/python3.6/site-packages/pygments/styles/.;lualatex --shell-escape --output-directory=build test.tex; okular build/test.pdf
+
+This highlighting scheme goes well with the following pygments lexer: https://github.com/sisl/pygments-julia
 """
 
 from pygments.style import Style

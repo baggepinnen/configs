@@ -61,11 +61,11 @@
 
   'logspace':
     'prefix': 'logspace'
-    'body': 'exp10.(range($1, stop=$2, length=$3))$4'
+    'body': 'exp10.(LinRange($1, $2, $3))$4'
 
   'linspace':
     'prefix': 'linspace'
-    'body': 'range($1, stop=$2, length=$3)$4'
+    'body': 'LinRange($1, $2, $3)$4'
 
   'eye':
     'prefix': 'eye'

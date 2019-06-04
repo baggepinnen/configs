@@ -58,8 +58,7 @@
   'f12': 'julia-debug:finish-function'
   'f5': 'julia-debug:continue'
 
-
-'.platform-linux .item-views > atom-text-editor[data-grammar="text md"]':
+'atom-text-editor[data-grammar="text md"]':
   'ctrl-enter': 'julia-client:run-block'
   'shift-enter': 'julia-client:run-and-move'
   'ctrl-shift-enter': 'julia-client:run-file'
