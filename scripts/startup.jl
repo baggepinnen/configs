@@ -261,7 +261,7 @@ macro showt(e)
     r = string(e)
     quote
         print($r, " type: ")
-        printstyled(typeof($(esc(e))), bold=true)
+        printstyled(typeof($(esc(e))), "\n", bold=true)
         $(esc(e))
     end
 end
