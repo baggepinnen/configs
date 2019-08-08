@@ -55,6 +55,10 @@
 
 '.source.julia':
 
+  'walkdir':
+    'prefix': 'walkdir'
+    'body': 'for (root, dirs, files) in walkdir(root)\n    for file in files\n        joinpath(root, file)\n    end\nend'
+
   'pkgdir':
     'prefix': 'pkgdir'
     'body': 'joinpath(dirname(pathof($1)), "$2")$3'

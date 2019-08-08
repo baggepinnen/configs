@@ -1,16 +1,16 @@
 # #!/usr/bin/julia
 # find undefs: (Array|Vector|Matrix)\{.*?\}\([^u]
 #
-using StaticArrays, BenchmarkTools, LinearAlgebra, Statistics, Random, AutomaticDocstrings, Serialization
+using StaticArrays, BenchmarkTools, LinearAlgebra, Statistics, Random, AutomaticDocstrings, Serialization, Plots
 ENV["PYTHON"] = "python3"
-try
-    @eval using Plots
-    @async begin
-        plot(randn(10)); closeall();
-    end
-catch err
-    @warn(err)
-end
+# try
+#     @eval using Plots
+#     @async begin
+#         plot(randn(10)); closeall();
+#     end
+# catch err
+#     @warn(err)
+# end
 # using Plots
 # pyplot()
 # theme(:ggplot2)
