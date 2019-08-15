@@ -40,7 +40,7 @@
     'ctrl-alt-d': 'custom:docstring'
     'ctrl-enter': 'julia-client:run-block'
     'shift-enter': 'julia-client:run-and-move'
-    'ctrl-shift-enter': 'julia-client:run-file'
+    'ctrl-shift-enter': 'julia-client:run-all'
     'alt-enter': 'julia-client:run-cell'
     'alt-shift-enter': 'julia-client:run-cell-and-move'
     'alt-down': 'julia-client:next-cell'
