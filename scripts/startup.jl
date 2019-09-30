@@ -1,8 +1,21 @@
 # #!/usr/bin/julia
 # find undefs: (Array|Vector|Matrix)\{.*?\}\([^u]
 #
+(..)(x,i...) = getindex.(x,i...)
+(..)(x::AbstractDict,i...) = getindex.(Ref(x), i...)
+(..)(x,i::Symbol) = getfield.(x,i)
+# a = [randn(3) for _ in 1:4];
+# b = [complex(i,i+1) for i in 1:4];
+# a..2 == getindex.(a, 2)
+# b..:re == getfield.(b, :re)
+
+using ThreadTools
+
+
 using StaticArrays, BenchmarkTools, LinearAlgebra, Statistics, Random, AutomaticDocstrings, Serialization, Plots
 ENV["PYTHON"] = "python3"
+ENV["LINES"] = 120
+ENV["COLUMNS"] = 500
 # try
 #     @eval using Plots
 #     @async begin

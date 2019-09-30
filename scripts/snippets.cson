@@ -54,6 +54,29 @@
       'body': '```julia\n$1\n```'
 
 '.source.julia':
+  'serialize':
+      'prefix': 'serialize'
+      'body': 'serialize("$1",$2)\n$2 = deserialize("$1")'
+
+  'loglog':
+      'prefix': 'loglog'
+      'body': 'plot($1, xscale=\:log10, yscale=\:log10)'
+
+  'semilogx':
+      'prefix': 'semilogx'
+      'body': 'plot($1, xscale=:log10)'
+
+  'semilogy':
+      'prefix': 'semilogy'
+      'body': 'plot($1, yscale=:log10)'
+
+  'yscale':
+      'prefix': 'yscale'
+      'body': 'yscale=:log10'
+
+  'xscale':
+      'prefix': 'xscale'
+      'body': 'xscale=:log10'
 
   'walkdir':
     'prefix': 'walkdir'
@@ -73,7 +96,7 @@
 
   'eye':
     'prefix': 'eye'
-    'body': 'Matrix{Float64}(I, $1, $1)$2'
+    'body': 'I($1, $1)$2'
 
   'TODO':
     'prefix': 'todo'
