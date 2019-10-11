@@ -15,7 +15,7 @@ class AtomoneStyle(Style):
     """
     Bagge's style
     """
-
+    default_style = ''
     background_color = '#f0f3f3'
 
     styles = {
@@ -32,7 +32,7 @@ class AtomoneStyle(Style):
         Operator.Word:      'bold #FF0000',# Does not seem to be used
 
         Name.Builtin:       '#008491', # Both these should be set to same
-        Name.Function:      '#008491', # Both these should be set to same
+        Name.Function:      '#0064BB', # Both these should be set to same
         Name.Class:         'bold #000000',
         Name.Namespace:     'bold #FF0000',# Does not seem to be used
         Name.Exception:     'bold #CC0000',
@@ -44,7 +44,7 @@ class AtomoneStyle(Style):
         Name.Tag:           'bold #FF0000',
         Name.Decorator:     '#9999FF',
 
-        String:             '#CCCA00', # This is used for strings
+        String:             '#BBDB00', # This is used for strings
         String.Doc:         'italic',
         String.Interpol:    '#AA0000', # Used for itnerpolations
         String.Escape:      'bold #CC3300',
