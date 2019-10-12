@@ -10,12 +10,9 @@
 # b..:re == getfield.(b, :re)
 
 using ThreadTools
-
-
 using StaticArrays, BenchmarkTools, LinearAlgebra, Statistics, Random, AutomaticDocstrings, Serialization, Plots
 ENV["PYTHON"] = "python3"
-ENV["LINES"] = 120
-ENV["COLUMNS"] = 500
+
 # try
 #     @eval using Plots
 #     @async begin
@@ -53,8 +50,8 @@ ENV["COLUMNS"] = 500
 #
 # # default(color_palette=:hsv)
 #
-Serialization.serialize(filename::AbstractString, data) = open(f->serialize(f, data), filename, "w")
-Serialization.deserialize(filename) = open(f->deserialize(f), filename)
+# Serialization.serialize(filename::AbstractString, data) = open(f->serialize(f, data), filename, "w")
+# Serialization.deserialize(filename) = open(f->deserialize(f), filename)
 #
 #
 # showfull(io, x) = show(IOContext(io; compact = false, limit = false), x)

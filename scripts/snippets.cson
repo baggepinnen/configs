@@ -96,7 +96,7 @@
 
   'eye':
     'prefix': 'eye'
-    'body': 'I($1, $1)$2'
+    'body': 'I($1)$2'
 
   'TODO':
     'prefix': 'todo'
