@@ -1,7 +1,7 @@
 # #!/usr/bin/julia
 # find undefs: (Array|Vector|Matrix)\{.*?\}\([^u]
 #
-(..)(x,i...) = getindex.(x,i...)
+(..)(x::AbstractVector,i...) = getindex.(x,i...)
 (..)(x::AbstractDict,i...) = getindex.(Ref(x), i...)
 (..)(x,i::Symbol) = getfield.(x,i)
 # a = [randn(3) for _ in 1:4];

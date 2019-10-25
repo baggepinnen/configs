@@ -53,6 +53,10 @@
       'prefix': 'julia'
       'body': '```julia\n$1\n```'
 
+  'ref':
+      'prefix': 'ref'
+      'body': '[`$1`](@ref)$2'
+
 '.source.julia':
   'serialize':
       'prefix': 'serialize'
