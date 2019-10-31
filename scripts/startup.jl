@@ -10,8 +10,11 @@
 # b..:re == getfield.(b, :re)
 
 using ThreadTools
-using StaticArrays, BenchmarkTools, LinearAlgebra, Statistics, Random, AutomaticDocstrings, Serialization, Plots
+using StaticArrays, BenchmarkTools, LinearAlgebra, Statistics, Random, Serialization, Plots
 ENV["PYTHON"] = "python3"
+# ENV["TRAVIS_PULL_REQUEST"]="false"
+
+# ENV["TRAVIS_BRANCH"]="master"
 
 # try
 #     @eval using Plots

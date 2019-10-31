@@ -36,8 +36,8 @@
     'body': '```{julia; echo=true; out_width="0.7\\textwidth"}\n$1\n```'
 
 '.string.docstring.julia':
-  'docref':
-    'prefix': 'docref'
+  'ref':
+    'prefix': 'ref'
     'body': '[`$1`](@ref)$2'
 
   'julia':
