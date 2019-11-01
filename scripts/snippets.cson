@@ -57,30 +57,47 @@
       'prefix': 'ref'
       'body': '[`$1`](@ref)$2'
 
+
 '.source.julia':
   'serialize':
-      'prefix': 'serialize'
-      'body': 'serialize("$1",$2)\n$2 = deserialize("$1")'
+    'prefix': 'serialize'
+    'body': 'serialize("$1",$2)\n$2 = deserialize("$1")'
 
   'loglog':
-      'prefix': 'loglog'
-      'body': 'plot($1, xscale=\:log10, yscale=\:log10)'
+    'prefix': 'loglog'
+    'body': 'plot($1, xscale=\:log10, yscale=\:log10)'
 
   'semilogx':
-      'prefix': 'semilogx'
-      'body': 'plot($1, xscale=:log10)'
+    'prefix': 'semilogx'
+    'body': 'plot($1, xscale=:log10)'
 
   'semilogy':
-      'prefix': 'semilogy'
-      'body': 'plot($1, yscale=:log10)'
+    'prefix': 'semilogy'
+    'body': 'plot($1, yscale=:log10)'
 
   'yscale':
-      'prefix': 'yscale'
-      'body': 'yscale=:log10'
+    'prefix': 'yscale'
+    'body': 'yscale=:log10'
 
   'xscale':
-      'prefix': 'xscale'
-      'body': 'xscale=:log10'
+    'prefix': 'xscale'
+    'body': 'xscale=:log10'
+
+  'ylabel':
+    'prefix': 'ylabel'
+    'body': 'ylabel="$1"'
+
+  'xlabel':
+    'prefix': 'xlabel'
+    'body': 'xlabel="$1"'
+
+  'title':
+    'prefix': 'title'
+    'body': 'title="$1"'
+
+  'label':
+    'prefix': 'label'
+    'body': 'label="$1"'
 
   'walkdir':
     'prefix': 'walkdir'
@@ -113,6 +130,14 @@
   'esc':
     'prefix': 'esc'
     'body': '\$(esc($1))$2'
+
+  'Optim.optimize':
+    'prefix': 'optimize'
+    'body': 'Optim.optimize($1, $2, LBFGS(m=20), Optim.Options(store_trace=true, show_trace=true, show_every=1, iterations=10, allow_f_increases=false, time_limit=100, x_tol=0, f_tol=0, g_tol=1e-8, f_calls_limit=0, g_calls_limit=0))'
+
+  'delete_method':
+    'prefix': 'delete_method'
+    'body': 'Base.delete_method.(methods($1))'
 
 
 '.text.tex.latex':
@@ -181,24 +206,24 @@
     'body': '\\\\usepackage{$1}'
 
   'Comment':
-      'prefix': 'comm'
-      'body': '\\\\cmt{$1}'
+    'prefix': 'comm'
+    'body': '\\\\cmt{$1}'
 
 
   'teletype':
-      'prefix': 'tt'
-      'body': '\\\\texttt{$1}'
+    'prefix': 'tt'
+    'body': '\\\\texttt{$1}'
 
   'juliaalg':
-      'prefix': 'juliaalg'
-      'body': '\\\\begin{algorithm}\n\\\\caption{$1}\n\\\\label{alg:$2}\n\\\\begin{minted}[breaklines,escapeinside=||,mathescape=true, numbersep=3pt, gobble=0, fontsize=\\\\small, framesep=2mm]{julia}\n$3\\\\end{minted}\n\\\\end{algorithm}'
+    'prefix': 'juliaalg'
+    'body': '\\\\begin{algorithm}\n\\\\caption{$1}\n\\\\label{alg:$2}\n\\\\begin{minted}[breaklines,escapeinside=||,mathescape=true, numbersep=3pt, gobble=0, fontsize=\\\\small, framesep=2mm]{julia}\n$3\\\\end{minted}\n\\\\end{algorithm}'
 
-    'julia':
-        'prefix': 'julia'
-        'body': '\\\\begin{minted}[breaklines,escapeinside=||,mathescape=true, numbersep=3pt, gobble=0, frame=lines, fontsize=\\\\small, framesep=2mm]{julia}\n$3\\\\end{minted}\n'
+  'julia':
+    'prefix': 'julia'
+    'body': '\\\\begin{minted}[breaklines,escapeinside=||,mathescape=true, numbersep=3pt, gobble=0, frame=lines, fontsize=\\\\small, framesep=2mm]{julia}\n$3\\\\end{minted}\n'
   'columns':
-      'prefix': 'columns'
-      'body':
+    'prefix': 'columns'
+    'body':
         '    \\\\begin{columns}\n
                 \t\\\\begin{column}{0.5\\\\textwidth}\n
                 \t\\\\end{column}\n
