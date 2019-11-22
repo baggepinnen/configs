@@ -11,7 +11,8 @@
 # b..:re == getfield.(b, :re)
 
 using ThreadTools
-using StaticArrays, BenchmarkTools, LinearAlgebra, Statistics, Random, Test, Serialization, Plots
+using StaticArrays, BenchmarkTools, LinearAlgebra, Statistics, Random, Serialization, Plots
+ENV["JULIA_DEBUG"] = "all"
 ENV["PYTHON"] = "python3"
 ENV["FLUX_USE_CUDA"] = "true"
 # ENV["LD_LIBRARY_PATH"] = "/usr/lib/x86_64-linux-gnu/"
