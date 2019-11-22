@@ -59,6 +59,12 @@
 
 
 '.source.julia':
+
+
+  'testset':
+    'prefix': 'testset'
+    'body': '@testset "$1" begin\n    @info "Testing $1"\n    $2\nend'
+
   'serialize':
     'prefix': 'serialize'
     'body': 'serialize("$1",$2)\n$2 = deserialize("$1")'

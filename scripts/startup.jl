@@ -4,17 +4,56 @@
 (..)(x::AbstractVector,i...) = getindex.(x,i...)
 (..)(x::AbstractDict,i...) = getindex.(Ref(x), i...)
 (..)(x,i::Symbol) = getfield.(x,i)
+(..)(x::AbstractVector,i::Symbol) = getfield.(x,i)
 # a = [randn(3) for _ in 1:4];
 # b = [complex(i,i+1) for i in 1:4];
 # a..2 == getindex.(a, 2)
 # b..:re == getfield.(b, :re)
 
 using ThreadTools
-using StaticArrays, BenchmarkTools, LinearAlgebra, Statistics, Random, Serialization, Plots
+using StaticArrays, BenchmarkTools, LinearAlgebra, Statistics, Random, Test, Serialization, Plots
 ENV["PYTHON"] = "python3"
+ENV["FLUX_USE_CUDA"] = "true"
+# ENV["LD_LIBRARY_PATH"] = "/usr/lib/x86_64-linux-gnu/"
+# push!(ENV["LD_LIBRARY_PATH"], "/usr/lib/x86_64-linux-gnu/")
 # ENV["TRAVIS_PULL_REQUEST"]="false"
 
 # ENV["TRAVIS_BRANCH"]="master"
+
+
+# using PkgTemplates, Git
+# template = Template(;
+#     dir="~/.julia/dev/",
+#     user="baggepinnen",
+#     plugins=[
+#         Git(; manifest=true, ssh=true),
+#         Codecov(),
+#         TravisCI(; x86=true),
+#         Documenter{TravisCI}(),
+#     ],
+# )
+
+macro lastfile()
+    quote
+        file = $(esc(String(__source__.file)))
+        dir = splitdir(file)[1]
+        lastfile(dir)
+    end
+end
+
+function lastfile(readpath=@__DIR__())
+    filenames = joinpath.(readpath, readdir(readpath))
+    filter!(x-> splitext(x)[2] == ".bin", filenames)
+    sort(filenames)[end]
+end
+
+using WAV
+function WAV.wavplay(x::AbstractArray,fs)
+    path = "/tmp/a.wav"
+    wavwrite(x,path,Fs=fs)
+    @info "Wrote to file $path"
+    Threads.@spawn run(`totem $path`)
+end
 
 # try
 #     @eval using Plots
@@ -149,18 +188,7 @@ end
 #
 #
 # #
-# using PyCall
-# PyCall.@pyimport matplotlib2tikz
-# """
-# `savetikz(path; fig = PyPlot.gcf(), extra::Vector{String})`
-# """
-# function savetikz(path; fig = PyPlot.gcf(), extra=[])
-#     if extra == []
-#         matplotlib2tikz.save(path,fig, figureheight = "\\figureheight", figurewidth = "\\figurewidth")
-#     else
-#         matplotlib2tikz.save(path,fig, figureheight = "\\figureheight", figurewidth = "\\figurewidth", extra_tikzpicture_parameters = PyCall.pybuiltin("set")(extra))
-#     end
-# end
+
 # #
 #
 #
