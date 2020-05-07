@@ -49,10 +49,14 @@
     'ctrl-shift-c': 'julia-client:interrupt-julia'
     'ctrl-j ctrl-d': 'julia-client:show-documentation'
     'ctrl-j ctrl-g': 'julia-client:goto-symbol'
+    'shift-f9': 'julia-client:debug-block'
+    'shift-f10': 'julia-client:step-through-block'
 
 'body':
     'alt-j': 'window:focus-pane-on-left'
     'alt-k': 'window:focus-pane-on-right'
+    'alt-pageup': 'window:focus-pane-on-left'
+    'alt-pagedown': 'window:focus-pane-on-right'
 
 'atom-text-editor':
     'ctrl-.': 'spell-check:correct-misspelling'

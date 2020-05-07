@@ -10,8 +10,11 @@
 # a..2 == getindex.(a, 2)
 # b..:re == getfield.(b, :re)
 
+addbillman(n=1) = addprocs([("fredrikb@172.16.7.95",n)])
+
+
 using ThreadTools
-using StaticArrays, BenchmarkTools, LinearAlgebra, Statistics, Random, Serialization, Plots
+using StaticArrays, BenchmarkTools, LinearAlgebra, Statistics, Random, Serialization, Plots, Test
 # ENV["JULIA_DEBUG"] = "all"
 ENV["PYTHON"] = "python3"
 ENV["FLUX_USE_CUDA"] = "true"
@@ -28,14 +31,39 @@ ENV["FLUX_USE_CUDA"] = "true"
 #     user="baggepinnen",
 #     license="MIT",
 #     authors=["Fredrik Bagge Carlson"],
-#     julia_version=v"1.0",
+#     julia_version=v"1.4",
 #     plugins=[
-#         # Git(; manifest=true, ssh=true),
+#         Git(; manifest=true, ssh=true),
 #         Codecov(),
-#         TravisCI()
+#         GitHubActions(osx=false, windows=false)
 #     ],
 # )
-# generate(template, "BlobTracking")
+# generate(template, "SlidingDistancesBase")
+
+
+"""
+    seconds2hms(s)
+
+Print hours minutes and seconds
+"""
+function seconds2hms(s)
+    s = round(Int, s)
+    h = s÷3600
+    s -= 3600h
+    m = s÷60
+    s -= 60m
+    "$h:$m:$s"
+end
+
+function seconds2ms(s)
+    s = round(Int, s)
+    h = s÷3600
+    s -= 3600h
+    m = s÷60
+    s -= 60m
+    "$m:$s"
+end
+
 
 macro lastfile()
     quote
@@ -69,7 +97,18 @@ end
 # end
 # using Plots
 # pyplot()
-# theme(:ggplot2)
+try
+    @eval Plots.PlotThemes juno_palette = [
+    RGB(0.1399999, 0.1399999, 0.4),
+    RGB(1.0, 0.7075, 0.35),
+    RGB(0.414999, 1.0, 1.0),
+    RGB(0.6, 0.21, 0.534999),
+    RGB(0,0.6,0),
+    ]
+    # theme(:juno)
+catch
+end
+
 # Plots.default(show=true, size=(1000,666))
 # # @spawn begin
 # try Plots.plot(randn(19),show=false); catch end
@@ -134,23 +173,25 @@ end
 # @inline quadform(a,Q) =  vecdot(a,(Q*a))
 #
 #
-function update_plot!(p; max_history = 10, attribute = :markercolor)
-    num_series = length(p.series_list)
-    if num_series > 1
-        if num_series > max_history
-            deleteat!(p.series_list,1:num_series-max_history)
-        end
-        for i = 1:min(max_history, num_series)-1
-            alpha = 1-2/max_history
-            c = p[i][attribute]
-            b = alpha*c.b + (1-alpha)*0.5
-            g = alpha*c.g + (1-alpha)*0.5
-            r = alpha*c.r + (1-alpha)*0.5
-            a = alpha*c.alpha
-            p[i][attribute] = RGBA(r,g,b,a)
-        end
-    end
-end
+# function update_plot!(p; max_history = 10, attribute = :markercolor)
+#     num_series = length(p.series_list)
+#     if num_series > 1
+#         if num_series > max_history
+#             deleteat!(p.series_list,1:num_series-max_history)
+#         end
+#         for i = 1:min(max_history, num_series)-1
+#             alpha = 1-2/max_history
+#             c = p[i][attribute]
+#             b = alpha*c.b + (1-alpha)*0.5
+#             g = alpha*c.g + (1-alpha)*0.5
+#             r = alpha*c.r + (1-alpha)*0.5
+#             a = alpha*c.alpha
+#             p[i][attribute] = RGBA(r,g,b,a)
+#         end
+#     end
+# end
+
+colorlist(N, style=:plasma) = Plots.ColorGradient(style)[1:N]
 
 function printpng(fig = current())
     savefig(fig, "tempplot.png")
@@ -236,46 +277,26 @@ end
 # end
 #
 #
-function savefig3(filename)
+# function savefig3(filename)
+#
+#     savefig(filename)
+#     temppath, temp = mktemp()
+#     pattern = r"axis background/.style={fill={rgb,1:red,[\d\.]+;green,[\d\.]+;blue,[\d\.]+}}\s*?,"
+#     open(filename) do f
+#         text = read(f, String)
+#         text = replace(text, pattern => "")
+#         text = replace(text, r"height = \{[\.\d]+\w*?\}" => "height = {\\figureheight}")
+#         text = replace(text, r"width = \{[\.\d]+\w*?\}" => "width = {\\figurewidth}")
+#         text = replace(text, r",[\w\s]+? style = \{font = \{\\fontsize\{[\w\s\d\.]*?\}\{[\w\s\d\.]*?\}\\selectfont\}, color = \{rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000\}, draw opacity = 1.0, rotate = 0.0\}" => "")
+#         text = replace(text, r",[\w\s]+? style = {color = \{rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000\},\n*?draw opacity = 1.0,\n*?line width = 1,\n*?solid(,fill = \{rgb,1:red,1.00000000;green,1.00000000;blue,1.00000000\},font = \{\\fontsize\{[\w\s\d\.]*?\}\{[\w\s\d\.]*?\}\\selectfont})?\}" => "")
+#         # text = replace(text, r""
+#         print(temp, text)
+#     end
+#     close(temp)
+#     mv(temppath, filename, force=true)
+# end
 
-    savefig(filename)
-    temppath, temp = mktemp()
-    pattern = r"axis background/.style={fill={rgb,1:red,[\d\.]+;green,[\d\.]+;blue,[\d\.]+}}\s*?,"
-    open(filename) do f
-        text = read(f, String)
-        text = replace(text, pattern => "")
-        text = replace(text, r"height = \{[\.\d]+\w*?\}" => "height = {\\figureheight}")
-        text = replace(text, r"width = \{[\.\d]+\w*?\}" => "width = {\\figurewidth}")
-        text = replace(text, r",[\w\s]+? style = \{font = \{\\fontsize\{[\w\s\d\.]*?\}\{[\w\s\d\.]*?\}\\selectfont\}, color = \{rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000\}, draw opacity = 1.0, rotate = 0.0\}" => "")
-        text = replace(text, r",[\w\s]+? style = {color = \{rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000\},\n*?draw opacity = 1.0,\n*?line width = 1,\n*?solid(,fill = \{rgb,1:red,1.00000000;green,1.00000000;blue,1.00000000\},font = \{\\fontsize\{[\w\s\d\.]*?\}\{[\w\s\d\.]*?\}\\selectfont})?\}" => "")
-        # text = replace(text, r""
-        print(temp, text)
-    end
-    close(temp)
-    mv(temppath, filename, force=true)
-end
 
-
-"""
-    superweave(source, args...; kwargs...)
-
-Args and kwargs goes to weave(s, args...; kwargs...)
-Try
-```julia
-using Literate, Weave
-superweave("myfile.jl", doctype="md2pdf")
-```
-"""
-function superweave(source, args...; kwargs...)
-    tmpname = tempname()
-    Literate.markdown(source, tmpname, documenter=false)
-    sourcename = replace(source, ".jl"=>".md")
-    sourcename = match(r"(\w+.md)", sourcename)[1]
-    sourcename = joinpath(tmpname,sourcename)
-    jmdsource = replace(sourcename,".md"=>".jmd")
-    run(`cp $(sourcename) $(jmdsource)`)
-    weave(jmdsource, args...; kwargs...)
-end
 
 #
 #
@@ -338,15 +359,14 @@ macro showst(e)
     end
 end
 
-
-
-struct onlyone <: AbstractMatrix{Bool}
-    v::Bool
+struct onlyone{T} <: AbstractMatrix{T}
+    v::T
+    a::T
 end
 function Base.iterate(o::onlyone, state=1)
       state == 1 ? o.v : !o.v, state+1
 end
 Base.size(o::onlyone) = (1,typemax(Int))
 Base.length(o::onlyone) = typemax(Int)
-Base.getindex(o::onlyone,i) = i == 1 ? o.v : !o.v
-Base.getindex(o::onlyone,i,j) = j == 1 ? o.v : !o.v
+Base.getindex(o::onlyone,i) = i == 1 ? o.v : o.a
+Base.getindex(o::onlyone,i,j) = j == 1 ? o.v : o.a

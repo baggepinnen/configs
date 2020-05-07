@@ -1,5 +1,5 @@
 meld scripts/snippets.cson ~/.atom/snippets.cson
 meld scripts/keymap.cson ~/.atom/keymap.cson
-meld scripts/init.coffee ~/.atom/init.coffee
+meld scripts/init.js ~/.atom/init.js
 meld scripts/startup.jl ~/.julia/config/startup.jl
 

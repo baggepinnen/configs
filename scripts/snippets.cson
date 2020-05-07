@@ -35,6 +35,10 @@
     'prefix': 'julia'
     'body': '```{julia; echo=true; out_width="0.7\\textwidth"}\n$1\n```'
 
+  'html':
+      'prefix': 'html'
+      'body': 'savefig("$1.html"); nothing # hide\n```\n```@raw html\n<object type="text/html" data="$1.html" style="width:100%;height:450px;"></object>\n```\n'
+
 '.string.docstring.julia':
   'ref':
     'prefix': 'ref'
@@ -59,7 +63,14 @@
 
 
 '.source.julia':
+  'doublemap':
+    'prefix': 'doublemap'
+    'body': '$1 = exp10.(LinRange($2, $3, $4))\n$5 = exp10.(LinRange($6, $7, $8))\nres = map(Iterators.product($1,$5)) do (l1,l2)\n
+        $9\nend\nheatmap($5,$1,res, xscale=:log10, yscale=:log10, xlabel="l2")\n'
 
+  'autodoc':
+    'prefix': 'autodoc'
+    'body': 'using AutomaticDocstrings$1\n@autodoc'
 
   'testset':
     'prefix': 'testset'
@@ -182,6 +193,12 @@
   'bold':
     'prefix': 'bold'
     'body': '\\\\textbf{$1}$2'
+
+  'ordo':
+    'prefix': 'ordo'
+    'body': '$\\\\mathcal{O}($1)$ $2'
+
+
 
   'figure':
     'prefix': 'figure'
