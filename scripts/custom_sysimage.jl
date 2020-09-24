@@ -6,8 +6,8 @@ using Pkg
 Pkg.update()
 using Random
 # Random.__init__()
-import GR
-import Plotly
+# import GR
+# import Plotly
 # GR.__init__()
 using Plots
 gr()
@@ -36,12 +36,16 @@ a+a
 a.*a
 sum(a)
 
-
-using DataFrames, Optim, OrdinaryDiffEq, StatsBase, DSP, Distances, ForwardDiff
+using Optim, StatsBase, DSP, Distances, ForwardDiff
+using OrdinaryDiffEq
 
 using PackageCompiler
-PackageCompiler.create_sysimage([:Plotly, :Plots, :GR, :StaticArrays, :BenchmarkTools, :DataFrames, :Optim, :OrdinaryDiffEq, :StatsBase, :DSP, :Distances, :ForwardDiff]; precompile_statements_file="precompile.jl", replace_default=false, sysimage_path="sys")
-quit()
+PackageCompiler.create_sysimage([:Plots, :StaticArrays, :BenchmarkTools, :Optim, :StatsBase, :DSP, :Distances, :ForwardDiff, :OrdinaryDiffEq]; precompile_statements_file="/home/fredrikb/custom_sysimage_precompile.jl", replace_default=false, sysimage_path="sys")
+
+# PackageCompiler.create_sysimage([:StaticArrays, :BenchmarkTools, :OrdinaryDiffEq]; precompile_statements_file="/home/fredrikb/custom_sysimage_precompile.jl", replace_default=false, sysimage_path="sys")
+
+
+
 
 
 # empty!(LOAD_PATH)
