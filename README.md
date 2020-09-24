@@ -21,3 +21,5 @@ Editor command: `/usr/bin/atom "%f:%l"`
 \usepgfplotslibrary{external}
 \tikzexternalize[prefix=build/] % then manually create the folder build/build
 ```
+## Make changes to PR branch
+The simplest approach is to follow [this guide](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/committing-changes-to-a-pull-request-branch-created-from-a-fork) and use the SSH protocol to push.
