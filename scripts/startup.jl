@@ -1,6 +1,9 @@
 # #!/usr/bin/julia
 # find undefs: (Array|Vector|Matrix)\{.*?\}\([^u]
 #
+Base.atreplinit() do repl
+    repl.options.iocontext[:compact] = true
+end
 (..)(x::AbstractVector,i...) = getindex.(x,i...)
 (..)(x::AbstractDict,i...) = getindex.(Ref(x), i...)
 (..)(x,i::Symbol) = getfield.(x,i)
@@ -10,14 +13,19 @@
 # a..2 == getindex.(a, 2)
 # b..:re == getfield.(b, :re)
 
-addbillman(n=1) = addprocs([("fredrikb@172.16.7.95",n)])
+# addbillman(n=1) = addprocs([("fredrikb@172.16.7.95",n)])
 
 
 using ThreadTools
-using StaticArrays, BenchmarkTools, LinearAlgebra, Statistics, Random, Serialization, Plots, Test
+using StaticArrays, BenchmarkTools, LinearAlgebra, Statistics, Random, Serialization, Test, Plots
 # ENV["JULIA_DEBUG"] = "all"
-ENV["PYTHON"] = "python3"
+# run(`source /home/fredrikb/cblib/venv/bin/activate`)
+
+ENV["JULIA_PKG_PRECOMPILE_AUTO"]=1
+ENV["PYTHON"] = "/usr/bin/python3.7" # build PyCall in a terminal with venv activated
+ENV["PYCALL_JL_RUNTIME_PYTHON"] = "/home/fredrikb/cblib/venv/bin/python3.7"
 ENV["FLUX_USE_CUDA"] = "true"
+# ENV["PYTHONPATH"] = "/home/fredrikb/cblib/venv/lib/python3.7/site-packages"
 # ENV["LD_LIBRARY_PATH"] = "/usr/lib/x86_64-linux-gnu/"
 # push!(ENV["LD_LIBRARY_PATH"], "/usr/lib/x86_64-linux-gnu/")
 # ENV["TRAVIS_PULL_REQUEST"]="false"
@@ -27,18 +35,21 @@ ENV["FLUX_USE_CUDA"] = "true"
 
 # using PkgTemplates
 # template = Template(;
-#     dir="~/.julia/dev/",
-#     user="baggepinnen",
-#     license="MIT",
-#     authors=["Fredrik Bagge Carlson"],
-#     julia_version=v"1.4",
-#     plugins=[
-#         Git(; manifest=true, ssh=true),
+#     dir = "~/.julia/dev/",
+#     user = "baggepinnen",
+#     host = "https://gitlab.cognibotics.net/",
+#     authors = ["Fredrik Bagge Carlson"],
+#     julia = v"1.5",
+#     plugins = [
+#         # License(name="MIT"),
+#         Git(; manifest = true, ssh = true),
 #         Codecov(),
-#         GitHubActions(osx=false, windows=false)
+#         # GitHubActions(osx = false, windows = false),
+#         # TravisCI(; x86 = true),
+#         # Documenter{TravisCI}(),
 #     ],
 # )
-# generate(template, "SlidingDistancesBase")
+# generate(template, "ResonanceModels")
 
 
 """
@@ -47,10 +58,10 @@ ENV["FLUX_USE_CUDA"] = "true"
 Print hours minutes and seconds
 """
 function seconds2hms(s)
-    s = round(Int, s)
-    h = s÷3600
+    s  = round(Int, s)
+    h  = s÷3600
     s -= 3600h
-    m = s÷60
+    m  = s÷60
     s -= 60m
     "$h:$m:$s"
 end
@@ -65,27 +76,27 @@ function seconds2ms(s)
 end
 
 
-macro lastfile()
-    quote
-        file = $(esc(String(__source__.file)))
-        dir = splitdir(file)[1]
-        lastfile(dir)
-    end
-end
+# macro lastfile()
+#     quote
+#         file = $(esc(String(__source__.file)))
+#         dir = splitdir(file)[1]
+#         lastfile(dir)
+#     end
+# end
 
-function lastfile(readpath=@__DIR__())
-    filenames = joinpath.(readpath, readdir(readpath))
-    filter!(x-> splitext(x)[2] == ".bin", filenames)
-    sort(filenames)[end]
-end
+# function lastfile(readpath=@__DIR__())
+#     filenames = joinpath.(readpath, readdir(readpath))
+#     filter!(x-> splitext(x)[2] == ".bin", filenames)
+#     sort(filenames)[end]
+# end
 
-using WAV
-function WAV.wavplay(x::AbstractArray,fs)
-    path = "/tmp/a.wav"
-    wavwrite(x,path,Fs=fs)
-    @info "Wrote to file $path"
-    Threads.@spawn run(`totem $path`)
-end
+# using WAV
+# function WAV.wavplay(x::AbstractArray,fs)
+#     path = "/tmp/a.wav"
+#     wavwrite(x,path,Fs=fs)
+#     @info "Wrote to file $path"
+#     Threads.@spawn run(`totem $path`)
+# end
 
 # try
 #     @eval using Plots
@@ -97,19 +108,19 @@ end
 # end
 # using Plots
 # pyplot()
-try
-    @eval Plots.PlotThemes juno_palette = [
-    RGB(0.1399999, 0.1399999, 0.4),
-    RGB(1.0, 0.7075, 0.35),
-    RGB(0.414999, 1.0, 1.0),
-    RGB(0.6, 0.21, 0.534999),
-    RGB(0,0.6,0),
-    ]
-    # theme(:juno)
-catch
-end
+# try
+#     @eval Plots.PlotThemes juno_palette = [
+#     RGB(0.1399999, 0.1399999, 0.4),
+#     RGB(1.0, 0.7075, 0.35),
+#     RGB(0.414999, 1.0, 1.0),
+#     RGB(0.6, 0.21, 0.534999),
+#     RGB(0,0.6,0),
+#     ]
+#     # theme(:juno)
+# catch
+# end
 
-# Plots.default(show=true, size=(1000,666))
+Plots.default(show=true, size=(900,800))
 # # @spawn begin
 # try Plots.plot(randn(19),show=false); catch end
 # Plots.plot(randn(19), show=false)
@@ -157,7 +168,7 @@ function toOrthoNormal(Ti)
 end
 
 function centraldiff(v::AbstractMatrix)
-    dv = diff(v)/2
+    dv = diff(v, dims=1)/2
     a1 = [dv[[1],:];dv]
     a2 = [dv;dv[[end],:]]
     a = a1+a2
@@ -191,13 +202,13 @@ end
 #     end
 # end
 
-colorlist(N, style=:plasma) = Plots.ColorGradient(style)[1:N]
+# colorlist(N, style=:plasma) = Plots.ColorGradient(style)[1:N]
 
-function printpng(fig = current())
-    savefig(fig, "tempplot.png")
-    run(`lpr -PForsbergColor tempplot.png`)
-    run(`rm tempplot.png`)
-end
+# function printpng(fig = current())
+#     savefig(fig, "tempplot.png")
+#     run(`lpr -PForsbergColor tempplot.png`)
+#     run(`rm tempplot.png`)
+# end
 #
 # function rotate_gif(plt = current(); fps=20, step=4)
 #     strings = String[]
@@ -358,6 +369,10 @@ macro showst(e)
         $(esc(e))
     end
 end
+
+typetree(x) = typetree(typeof(x))
+typetree(::Type{Any}) = println("Any")
+typetree(T::Union{DataType, UnionAll}) = (print(T, " <: "); typetree(supertype(T)))
 
 struct onlyone{T} <: AbstractMatrix{T}
     v::T

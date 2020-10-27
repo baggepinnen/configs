@@ -1,5 +1,10 @@
-meld scripts/snippets.cson ~/.atom/snippets.cson
-meld scripts/keymap.cson ~/.atom/keymap.cson
-meld scripts/init.js ~/.atom/init.js
+
+meld scripts/julia.json ~/.config/Code/User/snippets/julia.json
+meld scripts/keybindings.json ~/.config/Code/User/keybindings.json
+meld scripts/settings.json ~/.config/Code/User/settings.json
 meld scripts/startup.jl ~/.julia/config/startup.jl
+
+# meld scripts/snippets.cson ~/.atom/snippets.cson
+# meld scripts/keymap.cson ~/.atom/keymap.cson
+# meld scripts/init.js ~/.atom/init.js
 
