@@ -1,10 +1,9 @@
 #error("Use julia formatter a bit so Juno will be quicker at formatting")
-using Pkg
-Pkg.update()
-using Random
+# using Pkg
+# Pkg.update()
+# using Random
 # Random.__init__()
 import GR
-import Plotly
 # GR.__init__()
 using Plots
 gr()
@@ -12,6 +11,7 @@ plot(randn(3)) |> display
 plot(randn(3), randn(3)) |> display
 heatmap(randn(5, 5)) |> display
 
+# import Plotly
 plotly()
 plot(randn(3)) |> display
 plot(randn(3), randn(3)) |> display
@@ -20,7 +20,7 @@ display(f)
 
 
 
-gr()
+# gr()
 
 using StaticArrays, BenchmarkTools
 
@@ -34,27 +34,36 @@ a .* a
 sum(a)
 
 
-using Optim, StatsBase, DSP, ForwardDiff, JuliaFormatter
+using Optim, DSP, ForwardDiff, ComponentArrays
+using StatsBase
+using Turing
+using OrdinaryDiffEq
+
+using JuliaFormatter
 JuliaFormatter.format(@__FILE__)
 
 
 using PackageCompiler
-PackageCompiler.create_sysimage(
+@time PackageCompiler.create_sysimage(
     [
-        :Plotly,
-        :Plots,
-        :GR,
         :StaticArrays,
         :BenchmarkTools,
-        :Optim,
         :StatsBase,
+        :Turing,
+        :Optim,
         :DSP,
         :ForwardDiff,
+        :ComponentArrays,
+        :OrdinaryDiffEq,
+        # :Plotly,
+        :Plots,
+        :GR,
         :JuliaFormatter,
     ];
     precompile_statements_file = "precompile.jl",
+    # precompile_execution_file = "/home/fredrikb/configs/scripts/custom_sysimage.jl",
     replace_default = false,
-    sysimage_path = "sys_$VERSION",
+    sysimage_path = "sys_$(VERSION).so",
 )
 exit()
 

@@ -14,7 +14,9 @@ Then run the following command (maybe as root, not always needed) to recreate th
 `fmtutil-sys --all`
 
 ## Okular
-Editor command: `/usr/bin/atom "%f:%l"`
+Editor command:
+`/usr/bin/atom "%f:%l"`
+`code -g %f:%l`
 
 ## Tikzexternalize
 ```latex

@@ -4,10 +4,10 @@
 Base.atreplinit() do repl
     repl.options.iocontext[:compact] = true
 end
-(..)(x::AbstractVector,i...) = getindex.(x,i...)
-(..)(x::AbstractDict,i...) = getindex.(Ref(x), i...)
-(..)(x,i::Symbol) = getfield.(x,i)
-(..)(x::AbstractVector,i::Symbol) = getfield.(x,i)
+(≐)(x::AbstractVector,i...) = getindex.(x,i...)
+(≐)(x::AbstractDict,i...) = getindex.(Ref(x), i...)
+(≐)(x,i::Symbol) = getfield.(x,i)
+(≐)(x::AbstractVector,i::Symbol) = getfield.(x,i)
 # a = [randn(3) for _ in 1:4];
 # b = [complex(i,i+1) for i in 1:4];
 # a..2 == getindex.(a, 2)
@@ -22,8 +22,10 @@ using StaticArrays, BenchmarkTools, LinearAlgebra, Statistics, Random, Serializa
 # run(`source /home/fredrikb/cblib/venv/bin/activate`)
 
 ENV["JULIA_PKG_PRECOMPILE_AUTO"]=1
-ENV["PYTHON"] = "/usr/bin/python3.7" # build PyCall in a terminal with venv activated
-ENV["PYCALL_JL_RUNTIME_PYTHON"] = "/home/fredrikb/cblib/venv/bin/python3.7"
+# Never troubleshoot python installation in vscode, use terminal. Restart vscode and recompile sysimage if in use
+ENV["PYTHON"] = "/usr/bin/python3.8" # build PyCall in a terminal with venv activated
+ENV["PYCALL_JL_RUNTIME_PYTHON"] = "/usr/bin/python3.8"
+# ENV["PYCALL_JL_RUNTIME_PYTHON"] = "/home/fredrikb/cblib/venv/bin/python3.7"
 ENV["FLUX_USE_CUDA"] = "true"
 # ENV["PYTHONPATH"] = "/home/fredrikb/cblib/venv/lib/python3.7/site-packages"
 # ENV["LD_LIBRARY_PATH"] = "/usr/lib/x86_64-linux-gnu/"
@@ -36,20 +38,21 @@ ENV["FLUX_USE_CUDA"] = "true"
 # using PkgTemplates
 # template = Template(;
 #     dir = "~/.julia/dev/",
-#     user = "baggepinnen",
-#     host = "https://gitlab.cognibotics.net/",
+#    user = "baggepinnen",
+#     # user = "bagge",
+#     # host = "https://gitlab.cognibotics.net",
 #     authors = ["Fredrik Bagge Carlson"],
-#     julia = v"1.5",
+#     julia = v"1.6",
 #     plugins = [
-#         # License(name="MIT"),
-#         Git(; manifest = true, ssh = true),
+#         License(name="MIT"),
+#         Git(; manifest = false, ssh = true),
 #         Codecov(),
-#         # GitHubActions(osx = false, windows = false),
+#         GitHubActions(osx = false, windows = false),
 #         # TravisCI(; x86 = true),
 #         # Documenter{TravisCI}(),
 #     ],
 # )
-# generate(template, "ResonanceModels")
+# generate(template, "SignalAlignment")
 
 
 """
@@ -168,14 +171,14 @@ function toOrthoNormal(Ti)
 end
 
 function centraldiff(v::AbstractMatrix)
-    dv = diff(v, dims=1)/2
+    dv = Base.diff(v, dims=1)/2
     a1 = [dv[[1],:];dv]
     a2 = [dv;dv[[end],:]]
     a = a1+a2
 end
 
 function centraldiff(v::AbstractVector)
-    dv = diff(v)/2
+    dv = Base.diff(v)/2
     a1 = [dv[1];dv]
     a2 = [dv;dv[end]]
     a = a1+a2
@@ -334,6 +337,23 @@ end
 # end
 #
 #
+
+# how to escape a tuple
+# map(length, ($(esc.(e)...),))
+# or
+# macro all_l(exs...)
+#     escaped = esc.(exs)
+#     quote
+#       map(length, tuple($(escaped...)))
+#     end
+#   end;
+
+function wtf(samples, periods=1, fs=1000)
+    periods*fs/samples
+end
+
+
+
 macro showt(e)
     r = string(e)
     quote
@@ -385,3 +405,20 @@ Base.size(o::onlyone) = (1,typemax(Int))
 Base.length(o::onlyone) = typemax(Int)
 Base.getindex(o::onlyone,i) = i == 1 ? o.v : o.a
 Base.getindex(o::onlyone,i,j) = j == 1 ? o.v : o.a
+
+
+@async begin
+    @eval begin
+        sleep(10)
+        import Main.VSCodeServer
+        import Main.VSCodeServer.JuliaInterpreter
+        push!(Main.VSCodeServer.JuliaInterpreter.compiled_modules, Base)
+        push!(Main.VSCodeServer.JuliaInterpreter.compiled_modules, LinearAlgebra)
+        push!(Main.VSCodeServer.JuliaInterpreter.compiled_modules, Statistics)
+        import MethodAnalysis
+        MethodAnalysis.visit(Base) do item
+            isa(item, Module) && push!(Main.VSCodeServer.JuliaInterpreter.compiled_modules, item)
+            true
+        end
+    end
+end
