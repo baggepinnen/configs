@@ -1,0 +1,118 @@
+// Place your key bindings in this file to override the defaultsauto[]
+[
+    {
+        "key": "ctrl+shift+enter",
+        "command": "-editor.action.insertLineBefore",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+shift+enter",
+        "command": "-notebook.cell.insertCodeCellAbove",
+        "when": "notebookCellListFocused && !inputFocus"
+    },
+    {
+        "key": "ctrl+shift+enter",
+        "command": "-list.toggleSelection",
+        "when": "listFocus && !inputFocus"
+    },
+    {
+        "key": "ctrl+shift+enter",
+        "command": "-search.action.replaceAllInFile",
+        "when": "fileMatchFocus && replaceActive && searchViewletVisible"
+    },
+    {
+        "key": "ctrl+shift+enter",
+        "command": "-search.action.replaceAllInFolder",
+        "when": "folderMatchFocus && replaceActive && searchViewletVisible"
+    },
+    {
+        "key": "ctrl+shift+enter",
+        "command": "language-julia.runEditorContents"
+    },
+    {
+        "key": "shift+enter",
+        "command": "language-julia.executeCodeBlockOrSelectionAndMove",
+        "when": "editorTextFocus && editorLangId == 'julia'"
+    },
+    {
+        "key": "alt+enter",
+        "command": "-language-julia.executeCodeBlockOrSelectionAndMove",
+        "when": "editorTextFocus && editorLangId == 'julia'"
+    },
+    {
+        "key": "shift+enter",
+        "command": "-language-julia.executeCellAndMove",
+        "when": "editorTextFocus && editorLangId == 'julia'"
+    },
+    {
+        "key": "alt+enter",
+        "command": "language-julia.executeCell",
+        "when": "editorTextFocus && editorLangId == 'julia'"
+    },
+    {
+        "key": "ctrl+shift+enter",
+        "command": "language-julia.executeFile",
+        "when": "editorTextFocus && editorLangId == 'julia'"
+    },
+    {
+        "key": "ctrl+enter",
+        "command": "language-julia.executeCodeBlockOrSelection",
+        "when": "editorTextFocus && editorLangId == 'julia'"
+    },
+    {
+        "key": "ctrl+enter",
+        "command": "-language-julia.executeJuliaCodeInREPL",
+        "when": "editorTextFocus && editorLangId == 'julia'"
+    },
+    {
+        "key": "ctrl+enter",
+        "command": "-language-julia.executeJuliaCodeInREPL",
+        "when": "editorTextFocus && editorLangId == 'juliamarkdown'"
+    },
+    {
+        "key": "ctrl+j ctrl+c",
+        "command": "workbench.action.terminal.clear"
+    },
+    {
+        "key": "ctrl+alt+a",
+        "command": "wwm.aligncode"
+    },
+    {
+        "key": "ctrl+down",
+        "command": "editor.action.moveLinesDownAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "alt+down",
+        "command": "-editor.action.moveLinesDownAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+up",
+        "command": "editor.action.moveLinesUpAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "alt+up",
+        "command": "-editor.action.moveLinesUpAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+r",
+        "command": "editor.action.commentLine",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+shift+7",
+        "command": "-editor.action.commentLine",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "alt+'",
+        "command": "workbench.action.terminal.focus"
+    },
+    {
+        "key": "ctrl+alt+enter",
+        "command": "language-julia.executeJuliaCodeInREPL"
+    }
+]

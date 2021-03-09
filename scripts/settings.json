@@ -1,0 +1,136 @@
+{
+    "julia.enableTelemetry": true,
+    "editor.autoClosingBrackets": "never",
+    "julia.execution.resultType": "inline",
+    "workbench.colorTheme": "One Dark Pro",
+    "window.zoomLevel": -1,
+    "editor.minimap.enabled": false,
+    "editor.wordWrap": "on",
+    "editor.fontFamily": "JuliaMono",
+    "editor.fontLigatures": "'zero', 'ss01', 'ss02', 'ss03', 'ss04','ss05', 'ss06',  'ss07', 'ss08', 'ss09', 'ss10'",
+    "git.confirmSync": false,
+    "git.autofetch": true,
+    "[julia]": {
+        "editor.defaultFormatter": "singularitti.vscode-julia-formatter"
+    },
+    "julia.usePlotPane": false,
+    "juliaFormatter.annotateUntypedFieldsWithAny": false,
+    "editor.acceptSuggestionOnEnter": "off",
+    "julia.additionalArgs": [
+        // "-J/home/fredrikb/sys_1.6.0-rc1.so"
+    ],
+    "julia.executablePath": "/home/fredrikb/julia-1.6.0-rc1/bin/julia",
+    "julia.useRevise": false,
+    "julia.enableCrashReporter": true,
+    "latex-workshop.view.pdf.viewer": "tab",
+    "juliaFormatter.whitespaceTypedefs": true,
+    "alignment.surroundSpace": {
+
+        "assignment": [
+            1,
+            1
+        ],
+        "arrow": [
+            1,
+            1
+        ],
+        "comment": 2
+    },
+    "markdown-pdf.scale": 0.8,
+    "markdown-pdf.margin.left": "2cm",
+    "markdown-pdf.margin.right": "2cm",
+    "markdown-pdf.margin.top": "2.5cm",
+    "markdown-pdf.margin.bottom": "2cm",
+    "terminal.integrated.commandsToSkipShell": [
+        "language-julia.interrupt"
+    ],
+    "latex-workshop.latex.autoBuild.run": "never",
+    "files.exclude": {
+        "**/.git": false
+    },
+    "explorer.autoReveal": "focusNoScroll",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "[latex]": {
+    
+        "editor.formatOnPaste": false,
+        "editor.suggestSelection": "recentlyUsedByPrefix"
+    },
+    "cSpell.userWords": [
+        "Fredrik",
+        "approximative",
+        "bezier",
+        "cognibotics"
+    ],
+    "julia.usePlotPane": false,
+    "julia.lint.run": false,
+    "julia.lint.call": false,
+    "julia.lint.constif": false,
+    "julia.lint.disabledDirs": [
+        "/home/fredrikb/repos/julia",
+        "packages",
+        "docs",
+        "test"
+    ],
+    "cSpell.enableFiletypes": [
+        "!plaintext",
+        "juliamarkdown"
+    ],
+    "alignment.operatorPadding": "left",
+    "latex-workshop.latex.recipes": [
+
+        {
+            "name": "latexmk (lualatex)",
+            "tools": [
+                "lualatexmk"
+            ]
+        },
+        {
+            "name": "latexmk 🔃",
+            "tools": [
+                "latexmk"
+            ]
+        },
+        {
+            "name": "latexmk (latexmkrc)",
+            "tools": [
+                "latexmk_rconly"
+            ]
+        },
+        {
+            "name": "pdflatex ➞ bibtex ➞ pdflatex × 2",
+            "tools": [
+                "pdflatex",
+                "bibtex",
+                "pdflatex",
+                "pdflatex"
+            ]
+        },
+        {
+            "name": "Compile Rnw files",
+            "tools": [
+                "rnw2tex",
+                "latexmk"
+            ]
+        },
+        {
+            "name": "Compile Jnw files",
+            "tools": [
+                "jnw2tex",
+                "latexmk"
+            ]
+        },
+        {
+            "name": "tectonic",
+            "tools": [
+                "tectonic"
+            ]
+        }
+    ],
+    "latex-workshop.latex.recipe.default": "lastUsed",
+    "launch": {
+
+        "configurations": [],
+        "compounds": []
+    },
+    "workbench.editorAssociations": [],
+}

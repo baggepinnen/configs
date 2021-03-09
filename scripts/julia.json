@@ -1,0 +1,179 @@
+{
+	// Place your snippets for julia here. Each snippet is defined under a snippet name and has a prefix, body and 
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+	// same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log("$1");",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+	"autodoc": {
+		"prefix": "autodoc",
+		"body": ["using AutomaticDocstrings$1\n@autodoc"],
+	},
+
+	"display_current": {
+		"prefix": "display_current",
+		"body": ["display(current())"],
+	},
+
+
+	"doublemap": {
+		"prefix": "doublemap",
+		"body": "$1 = exp10.(LinRange($2, $3, $4))\n$5 = exp10.(LinRange($6, $7, $8))\nres = map(Iterators.product($1,$5)) do (l1,l2)\n$9\nend\nheatmap($5,$1,res, xscale=:log10, yscale=:log10, xlabel=\"l2\")\n"
+	},
+
+
+	"testset":{
+		"prefix": "testset",
+		"body": "@testset \"$1\" begin\n    @info \"Testing $1\"\n    $2\nend"
+	},
+
+	"gradient":{
+		"prefix": "gradient",
+		"body": "ch = ForwardDiff.Chunk($1)\nconst gradfun = x->f(x, and_other_stuff)\nconst cfg     = ForwardDiff.GradientConfig(gradfun, $1, ch)\nForwardDiff.gradient(gradfun, $1, cfg)"
+	},
+
+	"serialize":{
+		"prefix": "serialize",
+		"body": "serialize(\"$1\",$2)\n$2 = deserialize(\"$1\")"
+	},
+
+	"loglog":{
+		"prefix": "loglog",
+		"body": "plot($1, xscale=:log10, yscale=:log10)"
+	},
+
+	"semilogx":{
+		"prefix": "semilogx",
+		"body": "plot($1, xscale=:log10)"
+	},
+
+	"semilogy":{
+		"prefix": "semilogy",
+		"body": "plot($1, yscale=:log10)"
+	},
+
+	"yscale":{
+		"prefix": "yscale",
+		"body": "yscale=:log10"
+	},
+	
+	"xscale":{
+		"prefix": "xscale",
+		"body": "xscale=:log10"
+	},
+
+	"ylabel":{
+		"prefix": "ylabel",
+		"body": "ylabel=\"$1\""
+	},
+
+	"xlabel":{
+		"prefix": "xlabel",
+		"body": "xlabel=\"$1\""
+	},
+
+	"title":{
+		"prefix": "title",
+		"body": "title=\"$1\""
+	},
+
+	"label":{
+		"prefix": "label",
+		"body": "label=\"$1\""
+	},
+
+	"walkdir":{
+		"prefix": "walkdir",
+		"body": "for (root, dirs, files) in walkdir(root)\n    for file in files\n        joinpath(root, file)\n    end\nend"
+	},
+
+	"pkgdir":{
+		"prefix": "pkgdir",
+		"body": "joinpath(dirname(pathof($1)), \"$2\")$3"
+	},
+
+	"logspace":{
+		"prefix": "logspace",
+		"body": "exp10.(LinRange($1, $2, $3))$4"
+	},
+
+	"linspace":{
+		"prefix": "linspace",
+		"body": "LinRange($1, $2, $3)$4"
+	},
+
+	"eye":{
+		"prefix": "eye",
+		"body": "I($1)$2"
+	},
+
+	"TODO":{
+		"prefix": "todo",
+		"body": "# TODO: $1"
+	},
+
+	"iter":{
+		"prefix": "iter",
+		"body": "function Base.iterate($1::$2, state=$3)\n    state == length($4) && return nothing\n     ($3,state+1)\nend\nBase.length($1::$2) = $5\n"
+	},
+
+	"esc":{
+		"prefix": "esc",
+		"body": "\\$(esc($1))$2"
+	},
+
+	"Optim.optimize":{
+		"prefix": "optimize",
+		"body": "res = Optim.optimize(\n\t$1,\n\t$2,\n\tLBFGS(m = 20),\n\tOptim.Options(\n\t\tstore_trace       = true,\n\t\tshow_trace        = true,\n\t\tshow_every        = 1,\n\t\titerations        = 10,\n\t\tallow_f_increases = false,\n\t\ttime_limit        = 100,\n\t\tx_tol             = 0,\n\t\tf_tol             = 0,\n\t\tg_tol             = 1e-8,\n\t\tf_calls_limit     = 0,\n\t\tg_calls_limit     = 0,\n\t),\n)"
+	},
+	
+	"hyperoptimize":{
+		"prefix": "hyperoptimize",
+		"body": "hohb = @hyperopt for i=18, sampler=Hyperband(R=50, η=3, inner=RandomSampler()),\n\talgorithm = [SimulatedAnnealing(), ParticleSwarm(), NelderMead(), BFGS(), NewtonTrustRegion()],\n\t$1)\n\tif !(state === nothing)\n\t\tx0,algorithm = state\n\tend\n\tprintln(i, \" algorithm: \", typeof(algorithm).name.name)\n\tres = Optim.optimize($2, x0, algorithm, Optim.Options(time_limit=2i+3, show_trace=false))\n\tOptim.minimum(res), (Optim.minimizer(res), algorithm)\nend"
+	},
+
+	"throw":{
+		"prefix": "throw",
+		"body": "throw(ArgumentError(\"$1\"))"
+	},
+
+	"cd_dir":{
+		"prefix": "cddir",
+		"body": "cd(@__DIR__)"
+	},
+
+	"delete_method":{
+		"prefix": "delete_method",
+		"body": "Base.delete_method.(methods($1))"
+	},
+
+	"spectrogram":{
+		"prefix": "spectrogram",
+		"body": "plot(spectrogram($1, 1024, fs=$2, window=hanning), ylims=(0, $3))"
+	},
+
+	"wigner":{
+		"prefix": "wigner",
+		"body": "using SignalAnalysis\nusing SignalAnalysis.Units: kHz\naa = resample($1, 80/1000)\nplot(\n\ttfd(signal(aa, 0.08kHz), Wigner(nfft=1024, smooth=30, method=:CM1980, \nwindow=hamming)),\n\tyscale = :identity,\n\tylims  = (0, 45),\n\tyticks = 0:2:45,\n\ttitle  = \"Wigner-Ville distribution $2\",\n) |> display"
+	},
+
+	"filt":{
+		"prefix": "filt",
+		"body": "filt(digitalfilter(Lowpass($1; fs$2), Butterworth(2)), $3)"
+	},
+
+	"format_file":{
+		"prefix": "format_file",
+		"body": "JuliaFormatter.format_file(@__FILE__)"
+	},
+	
+	
+
+}
