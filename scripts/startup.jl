@@ -1,9 +1,9 @@
 # #!/usr/bin/julia
 # find undefs: (Array|Vector|Matrix)\{.*?\}\([^u]
 #
-Base.atreplinit() do repl
-    repl.options.iocontext[:compact] = true
-end
+# Base.atreplinit() do repl
+#     repl.options.iocontext[:compact] = true
+# end
 (≐)(x::AbstractVector,i...) = getindex.(x,i...)
 (≐)(x::AbstractDict,i...) = getindex.(Ref(x), i...)
 (≐)(x,i::Symbol) = getfield.(x,i)
@@ -15,13 +15,24 @@ end
 
 # addbillman(n=1) = addprocs([("fredrikb@172.16.7.95",n)])
 
+# ENV["GRDISPLAY"] = "js"
+# ENV["GR_DISPLAY"] = "js"
+# ENV["GKSwstype"] = "381"
+# ENV["GKS_WSTYPE"] = "381"
 
 using ThreadTools
 using StaticArrays, BenchmarkTools, LinearAlgebra, Statistics, Random, Serialization, Test, Plots
+
+BLAS.set_num_threads(2)
+
 # ENV["JULIA_DEBUG"] = "all"
 # run(`source /home/fredrikb/cblib/venv/bin/activate`)
 
-ENV["JULIA_PKG_PRECOMPILE_AUTO"]=1
+ENV["UNITFUL_FANCY_EXPONENTS"] = true
+
+ENV["JULIA_SSH_NO_VERIFY_HOSTS"] = "gitlab.cognibotics.net"
+ENV["JULIA_PKG_PRECOMPILE_AUTO"] = 1
+ENV["JULIA_NUM_PRECOMPILE_TASKS"] = 6
 # Never troubleshoot python installation in vscode, use terminal. Restart vscode and recompile sysimage if in use
 ENV["PYTHON"] = "/usr/bin/python3.8" # build PyCall in a terminal with venv activated
 ENV["PYCALL_JL_RUNTIME_PYTHON"] = "/usr/bin/python3.8"
@@ -38,21 +49,22 @@ ENV["FLUX_USE_CUDA"] = "true"
 # using PkgTemplates
 # template = Template(;
 #     dir = "~/.julia/dev/",
-#    user = "baggepinnen",
-#     # user = "bagge",
-#     # host = "https://gitlab.cognibotics.net",
-#     authors = ["Fredrik Bagge Carlson"],
+#     # dir = "~/repos/vibdamp-21/",
+#     # user = "baggepinnen",
+#     # authors = ["Fredrik Bagge Carlson"],
+#     user = "bagge",
+#     host = "https://gitlab.cognibotics.net",
+#     authors = ["Cognibotics"],
 #     julia = v"1.6",
 #     plugins = [
-#         License(name="MIT"),
+#         # License(name="MIT"),
 #         Git(; manifest = false, ssh = true),
-#         Codecov(),
-#         GitHubActions(osx = false, windows = false),
-#         # TravisCI(; x86 = true),
+#         # Codecov(),
+#         # GitHubActions(osx = false, windows = false),
 #         # Documenter{TravisCI}(),
 #     ],
 # )
-# generate(template, "SignalAlignment")
+# generate(template, "HKMControlDesign")
 
 
 """
@@ -123,7 +135,12 @@ end
 # catch
 # end
 
-Plots.default(show=true, size=(900,800))
+Plots.default(show=true, size=(1100,800))
+CBblue = RGB(23/255, 74/255, 91/255)
+CBdarkblue = RGB(5/255, 28/255, 44/255)
+CBgris = RGB(254/255, 173/255, 119/255)
+CBbg = RGB(5/255,28/255,44/255)
+
 # # @spawn begin
 # try Plots.plot(randn(19),show=false); catch end
 # Plots.plot(randn(19), show=false)
@@ -394,31 +411,23 @@ typetree(x) = typetree(typeof(x))
 typetree(::Type{Any}) = println("Any")
 typetree(T::Union{DataType, UnionAll}) = (print(T, " <: "); typetree(supertype(T)))
 
+function subtypetree(T, level=0)
+    print("   "^level)
+    println(T)
+    for t in subtypes(T)
+        subtypetree(t, level+1)
+    end
+end
+
 struct onlyone{T} <: AbstractMatrix{T}
     v::T
     a::T
 end
 function Base.iterate(o::onlyone, state=1)
-      state == 1 ? o.v : !o.v, state+1
+    state == 1 ? o.v : !o.v, state+1
 end
 Base.size(o::onlyone) = (1,typemax(Int))
 Base.length(o::onlyone) = typemax(Int)
 Base.getindex(o::onlyone,i) = i == 1 ? o.v : o.a
 Base.getindex(o::onlyone,i,j) = j == 1 ? o.v : o.a
 
-
-@async begin
-    @eval begin
-        sleep(10)
-        import Main.VSCodeServer
-        import Main.VSCodeServer.JuliaInterpreter
-        push!(Main.VSCodeServer.JuliaInterpreter.compiled_modules, Base)
-        push!(Main.VSCodeServer.JuliaInterpreter.compiled_modules, LinearAlgebra)
-        push!(Main.VSCodeServer.JuliaInterpreter.compiled_modules, Statistics)
-        import MethodAnalysis
-        MethodAnalysis.visit(Base) do item
-            isa(item, Module) && push!(Main.VSCodeServer.JuliaInterpreter.compiled_modules, item)
-            true
-        end
-    end
-end

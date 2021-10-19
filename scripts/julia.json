@@ -14,7 +14,7 @@
 	// }
 	"autodoc": {
 		"prefix": "autodoc",
-		"body": ["using AutomaticDocstrings$1\n@autodoc"],
+		"body": ["${1:using AutomaticDocstrings}$2\n@autodoc"],
 	},
 
 	"display_current": {
@@ -22,16 +22,14 @@
 		"body": ["display(current())"],
 	},
 
-
 	"doublemap": {
 		"prefix": "doublemap",
 		"body": "$1 = exp10.(LinRange($2, $3, $4))\n$5 = exp10.(LinRange($6, $7, $8))\nres = map(Iterators.product($1,$5)) do (l1,l2)\n$9\nend\nheatmap($5,$1,res, xscale=:log10, yscale=:log10, xlabel=\"l2\")\n"
 	},
 
-
 	"testset":{
 		"prefix": "testset",
-		"body": "@testset \"$1\" begin\n    @info \"Testing $1\"\n    $2\nend"
+		"body": "@testset \"$1\" begin\n    @info \"Testing $1\"\n    include(\"test_$1.jl\")\nend"
 	},
 
 	"gradient":{
@@ -46,27 +44,27 @@
 
 	"loglog":{
 		"prefix": "loglog",
-		"body": "plot($1, xscale=:log10, yscale=:log10)"
+		"body": "plot($1, xscale=:${1|log10,identity|}, yscale=:${2|log10,identity|})"
 	},
 
 	"semilogx":{
 		"prefix": "semilogx",
-		"body": "plot($1, xscale=:log10)"
+		"body": "plot($1, xscale=:${1|log10,identity|})"
 	},
 
 	"semilogy":{
 		"prefix": "semilogy",
-		"body": "plot($1, yscale=:log10)"
+		"body": "plot($1, yscale=:${1|log10,identity|})"
 	},
 
 	"yscale":{
 		"prefix": "yscale",
-		"body": "yscale=:log10"
+		"body": "yscale=:${1|log10,identity|}"
 	},
 	
 	"xscale":{
 		"prefix": "xscale",
-		"body": "xscale=:log10"
+		"body": "xscale=:${1|log10,identity|}"
 	},
 
 	"ylabel":{
@@ -89,14 +87,34 @@
 		"body": "label=\"$1\""
 	},
 
+	"default":{
+		"prefix": "default",
+		"body": "default(size=(${1:1850}, ${2:900}), show=${3|false, true|})"
+	},
+
+	"plotly":{
+		"prefix": "plotly",
+		"body": "plotly(size=(${1:1850}, ${2:900}), show=${3|false, true|})"
+	},
+
+	"size":{
+		"prefix": "size",
+		"body": "size = (${1:1850}, ${2:900}),"
+	},
+
 	"walkdir":{
 		"prefix": "walkdir",
-		"body": "for (root, dirs, files) in walkdir(root)\n    for file in files\n        joinpath(root, file)\n    end\nend"
+		"body": "for (root, dirs, files) in walkdir(root)\n    for file in files\n        filepath = joinpath(root, file)\n    end\nend"
 	},
 
 	"pkgdir":{
 		"prefix": "pkgdir",
 		"body": "joinpath(dirname(pathof($1)), \"$2\")$3"
+	},
+
+	"freqvec":{
+		"prefix": "freqvec",
+		"body": "w = 2π .* exp10.(LinRange(${1:-1}, ${2:log10(500)}, ${3:500}))$4"
 	},
 
 	"logspace":{
@@ -131,7 +149,7 @@
 
 	"Optim.optimize":{
 		"prefix": "optimize",
-		"body": "res = Optim.optimize(\n\t$1,\n\t$2,\n\tLBFGS(m = 20),\n\tOptim.Options(\n\t\tstore_trace       = true,\n\t\tshow_trace        = true,\n\t\tshow_every        = 1,\n\t\titerations        = 10,\n\t\tallow_f_increases = false,\n\t\ttime_limit        = 100,\n\t\tx_tol             = 0,\n\t\tf_tol             = 0,\n\t\tg_tol             = 1e-8,\n\t\tf_calls_limit     = 0,\n\t\tg_calls_limit     = 0,\n\t),\n)"
+		"body": "using Optim, Optim.LineSearches\nres = Optim.optimize(\n\t$1,\n\t$2,\n\tBFGS(alphaguess = LineSearches.InitialStatic(alpha=1), linesearch = LineSearches.HagerZhang()),\n\tOptim.Options(\n\t\tstore_trace       = true,\n\t\tshow_trace        = true,\n\t\tshow_every        = 1,\n\t\titerations        = 10,\n\t\tallow_f_increases = false,\n\t\ttime_limit        = 100,\n\t\tx_tol             = 0,\n\t\tf_abstol          = 0,\n\t\tg_tol             = 1e-8,\n\t\tf_calls_limit     = 0,\n\t\tg_calls_limit     = 0,\n\t),\n)"
 	},
 	
 	"hyperoptimize":{
@@ -156,24 +174,51 @@
 
 	"spectrogram":{
 		"prefix": "spectrogram",
-		"body": "plot(spectrogram($1, 1024, fs=$2, window=hanning), ylims=(0, $3))"
+		"body": "plot(spectrogram($1, ${2|512,1024,2048|}, fs=${3:1000}, window=hanning), ylims=(0, ${4:100}), yscale=:${5|log10,identity|})"
 	},
 
 	"wigner":{
 		"prefix": "wigner",
-		"body": "using SignalAnalysis\nusing SignalAnalysis.Units: kHz\naa = resample($1, 80/1000)\nplot(\n\ttfd(signal(aa, 0.08kHz), Wigner(nfft=1024, smooth=30, method=:CM1980, \nwindow=hamming)),\n\tyscale = :identity,\n\tylims  = (0, 45),\n\tyticks = 0:2:45,\n\ttitle  = \"Wigner-Ville distribution $2\",\n) |> display"
+		"body": "using SignalAnalysis\nusing SignalAnalysis.Units: kHz\naa = resample($1, 80/1000)\nplot(\n\ttfd(signal(aa, 0.08kHz), Wigner(nfft=1024, smooth=30, method=:CM1980, \nwindow=hamming)),\n\tyscale=:${2|log10,identity|},\n\tylims  = (0, 45),\n\tyticks = 0:2:45,\n\ttitle  = \"Wigner-Ville distribution $3\",\n) |> display"
 	},
 
 	"filt":{
 		"prefix": "filt",
-		"body": "filt(digitalfilter(Lowpass($1; fs$2), Butterworth(2)), $3)"
+		"body": "${1|filt,filtfilt|}(digitalfilter(Lowpass($2; fs=${3:1000}), Butterworth(2)), ${4:x})"
 	},
 
 	"format_file":{
 		"prefix": "format_file",
-		"body": "JuliaFormatter.format_file(@__FILE__)"
+		"body": "using JuliaFormatter; JuliaFormatter.format_file(@__FILE__, align_assignment=true, align_struct_field=true, align_conditional=true, align_pair_arrow=true)"
+	},
+
+	"filename":{
+		"prefix": "filename",
+		"body": "(first ∘ splitext ∘ basename)($1)"
+	},
+
+	"ref":{
+		"prefix": "ref",
+		"body": "[`$1$TM_SELECTED_TEXT`](@ref)$2"
 	},
 	
-	
+	"lens":{
+		"prefix": "lens",
+		"body": "lens!([${1:x1}, ${2:x2}], [${3:y1}, ${4:y1}], inset=(1, bbox(.5, .5, .4, .4))) ${5:# 1 is subplot index}"
+	},
+
+	"getproperty":{
+		"prefix": "getproperty",
+		"body": "function Base.getproperty($1, s::Symbol)\n
+		s ∈ fieldnames(typeof($1)) && return getfield($1, s)\n
+		if s === :$2\n
+		else\n
+			throw(ArgumentError(\"\$$1 has no property named \$s\"))\n
+		end\n
+	end\n"}
+	},
+
+
+
 
 }

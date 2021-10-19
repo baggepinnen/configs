@@ -47,7 +47,7 @@
     {
         "key": "alt+enter",
         "command": "language-julia.executeCell",
-        "when": "editorTextFocus && editorLangId == 'julia'"
+        "when": "editorLangId == 'juliamarkdown' || editorTextFocus && editorLangId == 'julia'"
     },
     {
         "key": "ctrl+shift+enter",
@@ -57,7 +57,7 @@
     {
         "key": "ctrl+enter",
         "command": "language-julia.executeCodeBlockOrSelection",
-        "when": "editorTextFocus && editorLangId == 'julia'"
+        "when": "editorLangId == 'juliamarkdown' || editorLangId == 'markdown' || editorTextFocus && editorLangId == 'julia'"
     },
     {
         "key": "ctrl+enter",
@@ -113,6 +113,44 @@
     },
     {
         "key": "ctrl+alt+enter",
-        "command": "language-julia.executeJuliaCodeInREPL"
+        "command": "language-julia.executeJuliaCodeInREPL",
+        "when": "editorLangId == 'juliamarkdown' || editorLangId == 'markdown' || editorTextFocus && editorLangId == 'julia'"
+    },
+    {
+        "key": "ctrl+enter",
+        "command": "-editor.action.insertLineAfter",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "alt+[Quote]",
+        "command": "workbench.action.focusPreviousPart"
+    },
+    {
+        "key": "shift+f6",
+        "command": "-workbench.action.focusPreviousPart"
+    },
+    {
+        "key": "alt+[Quote]",
+        "command": "workbench.action.focusLeftGroup",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+k ctrl+left",
+        "command": "-workbench.action.focusLeftGroup"
+    },
+    {
+        "key": "ctrl+k ctrl+c",
+        "command": "-editor.action.addCommentLine",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "f1",
+        "command": "editor.action.peekDefinition",
+        "when": "editorHasDefinitionProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
+    },
+    {
+        "key": "ctrl+shift+f10",
+        "command": "-editor.action.peekDefinition",
+        "when": "editorHasDefinitionProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
     }
 ]
