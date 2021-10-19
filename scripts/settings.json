@@ -1,9 +1,10 @@
 {
     "julia.enableTelemetry": true,
     "editor.autoClosingBrackets": "never",
+    "editor.autoClosingQuotes": "never",
+    "editor.autoClosingOvertype": "never",
     "julia.execution.resultType": "inline",
     "workbench.colorTheme": "One Dark Pro",
-    "window.zoomLevel": -1,
     "editor.minimap.enabled": false,
     "editor.wordWrap": "on",
     "editor.fontFamily": "JuliaMono",
@@ -13,19 +14,18 @@
     "[julia]": {
         "editor.defaultFormatter": "singularitti.vscode-julia-formatter"
     },
-    "julia.usePlotPane": false,
     "juliaFormatter.annotateUntypedFieldsWithAny": false,
     "editor.acceptSuggestionOnEnter": "off",
     "julia.additionalArgs": [
-        // "-J/home/fredrikb/sys_1.6.0-rc1.so"
+        "-J/home/fredrikb/sys_1.6.1.so",
+        // "--startup-file=no"
     ],
-    "julia.executablePath": "/home/fredrikb/julia-1.6.0-rc1/bin/julia",
     "julia.useRevise": false,
     "julia.enableCrashReporter": true,
-    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.view.pdf.viewer": "external",
     "juliaFormatter.whitespaceTypedefs": true,
+    "autoalign.minSeparationLeft": 1,
     "alignment.surroundSpace": {
-
         "assignment": [
             1,
             1
@@ -51,6 +51,7 @@
     "explorer.autoReveal": "focusNoScroll",
     "diffEditor.ignoreTrimWhitespace": false,
     "[latex]": {
+
     
         "editor.formatOnPaste": false,
         "editor.suggestSelection": "recentlyUsedByPrefix"
@@ -59,13 +60,19 @@
         "Fredrik",
         "approximative",
         "bezier",
-        "cognibotics"
+        "cognibotics",
+        "estun",
+        "feedforward",
+        "jacobians",
+        "kalman",
+        "linearization",
+        "mimo",
+        "riccati",
+        "siso"
     ],
-    "julia.usePlotPane": false,
-    "julia.lint.run": false,
-    "julia.lint.call": false,
     "julia.lint.constif": false,
     "julia.lint.disabledDirs": [
+        "/home/fredrikb/.julia/dev",
         "/home/fredrikb/repos/julia",
         "packages",
         "docs",
@@ -77,6 +84,7 @@
     ],
     "alignment.operatorPadding": "left",
     "latex-workshop.latex.recipes": [
+
 
         {
             "name": "latexmk (lualatex)",
@@ -126,11 +134,185 @@
             ]
         }
     ],
-    "latex-workshop.latex.recipe.default": "lastUsed",
+    "latex-workshop.latex.recipe.default": "latexmk (lualatex)",
+    "latex-workshop.view.pdf.external.command": {
+        "command": "okular",
+        "args": [
+            "--unique",
+            "%PDF%"
+        ]
+    },
+    // If you want the external viewer to be default, uncomment the next line
+    "latex-workshop.view.pdf.external.synctex": {
+        "command": "okular",
+        "args": [
+            "--unique",
+            "%PDF%#src:%LINE%%TEX%"
+        ]
+    },
     "launch": {
 
         "configurations": [],
         "compounds": []
     },
-    "workbench.editorAssociations": [],
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter.notebook.ipynb",
+        "git-rebase-todo": "default"
+    },
+    "editor.rulers": [
+        80
+    ],
+    "coverage-gutters.coverageFileNames": [
+        "lcov.info",
+        "coverage-lcov.info",
+        "cov.xml",
+        "coverage.xml",
+        "jacoco.xml"
+    ],
+    "coverage-gutters.lcovname": "coverage-lcov.info",
+    "bracket-pair-colorizer-2.colors": [
+        "LightSkyBlue",
+        "Orchid",
+        "Gold"
+    ],
+    "indentRainbow.colors": [
+        "rgba(255,255,64,0.02)",
+        "rgba(127,255,127,0.02)",
+        "rgba(255,127,255,0.02)",
+        "rgba(79,236,236,0.02)"
+    ],
+    "tabnine.experimentalAutoImports": true,
+    "settingsSync.ignoredSettings": [
+        "julia.additionalArgs"
+    ],
+    "autoalign.moveableItems": [
+        "=",
+        "::",
+        "+=",
+        "-=",
+        "*=",
+        "/=",
+        ".+=",
+        ".-=",
+        ".*=",
+        "./=",
+        "-->"
+    ],
+    "python.showStartPage": false,
+    "julia.environmentPath": "/home/fredrikb/.julia/environments/v1.6",
+    "julia.usePlotNavigator": false,
+    "julia.lint.run": true,
+    "julia.completionmode": "exportedonly",
+    "julia.executablePath": "/home/fredrikb/julia_vscode.sh",
+    "julia.symbolCacheDownload": true,
+    "explorer.confirmDragAndDrop": false,
+    "explorer.confirmDelete": false,
+    "cSpell.enabled": true,
+    "editor.bracketPairColorization.enabled": true,
+    "todo-tree.general.tags": [
+        "BUG",
+        "HACK",
+        "FIXME",
+        "TODO",
+        "XXX",
+        "[ ]",
+        "[x]",
+        "QUESTION"
+    ],
+    "todo-tree.regex.regex": "(//|#|<!--|;|/\\*|^|^\\s*(-|\\d+.))\\s*($TAGS)",
+    "julia.usePlotPane": false,
+    "latex-workshop.latex.tools": [
+
+        {
+            "name": "latexmk",
+            "command": "latexmk",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-pdf",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "lualatexmk",
+            "command": "latexmk",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-lualatex",
+                "-shell-escape",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "latexmk_rconly",
+            "command": "latexmk",
+            "args": [
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "pdflatex",
+            "command": "pdflatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "bibtex",
+            "command": "bibtex",
+            "args": [
+                "%DOCFILE%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "rnw2tex",
+            "command": "Rscript",
+            "args": [
+                "-e",
+                "knitr::opts_knit$set(concordance = TRUE); knitr::knit('%DOCFILE_EXT%')"
+            ],
+            "env": {}
+        },
+        {
+            "name": "jnw2tex",
+            "command": "julia",
+            "args": [
+                "-e",
+                "using Weave; weave(\"%DOC_EXT%\", doctype=\"tex\")"
+            ],
+            "env": {}
+        },
+        {
+            "name": "jnw2texmintex",
+            "command": "julia",
+            "args": [
+                "-e",
+                "using Weave; weave(\"%DOC_EXT%\", doctype=\"texminted\")"
+            ],
+            "env": {}
+        },
+        {
+            "name": "tectonic",
+            "command": "tectonic",
+            "args": [
+                "--synctex",
+                "--keep-logs",
+                "%DOC%.tex"
+            ],
+            "env": {}
+        }
+    ],
 }
