@@ -36,7 +36,7 @@ sum(a)
 
 using Optim, DSP, ForwardDiff, ComponentArrays
 using StatsBase
-using Turing
+# using Turing
 using OrdinaryDiffEq
 
 using JuliaFormatter
@@ -49,7 +49,7 @@ using PackageCompiler
         :StaticArrays,
         :BenchmarkTools,
         :StatsBase,
-        :Turing,
+        # :Turing,
         :Optim,
         :DSP,
         :ForwardDiff,
