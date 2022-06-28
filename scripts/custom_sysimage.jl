@@ -1,5 +1,4 @@
-#error("Use julia formatter a bit so Juno will be quicker at formatting")
-
+# julia --startup-file=no --trace-compile=precompile.jl
 import GR
 using Plots
 gr()
@@ -41,6 +40,18 @@ using OrdinaryDiffEq
 using JuliaFormatter
 JuliaFormatter.format(@__FILE__)
 
+import MatrixEquations
+A = [0.9 0; 0.01 0.9];
+B = randn(2, 2);
+MatrixEquations.plyapd(A, B)
+
+import DescriptorSystems
+let G = DescriptorSystems.rss(2, 2, 2)
+    DescriptorSystems.ghinfnorm(G)
+    DescriptorSystems.gnlcf(G)
+    DescriptorSystems.gnugap(G, G)
+end
+
 
 # using Pluto, PlutoUI
 # plutotask = @async Pluto.run(launch_browser = false)
@@ -53,6 +64,8 @@ using PackageCompiler
     [
         :BenchmarkTools,
         # :ComponentArrays,
+        :DescriptorSystems,
+        :MatrixEquations,
         :DSP,
         # :DynamicAxisWarping,
         :ForwardDiff,
@@ -69,7 +82,7 @@ using PackageCompiler
     ];
     precompile_statements_file = "precompile.jl",
     # precompile_execution_file = "/home/fredrikb/configs/scripts/custom_sysimage.jl",
-    replace_default = false,
+    # replace_default = false,
     sysimage_path = "sys_$(VERSION).so",
 )
 exit()
