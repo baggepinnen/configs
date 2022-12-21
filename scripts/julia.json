@@ -14,7 +14,7 @@
 	// }
 	"autodoc": {
 		"prefix": "autodoc",
-		"body": ["${1:using AutomaticDocstrings}$2\n@autodoc"],
+		"body": ["${1:@eval Main using AutomaticDocstrings}$2\n@eval Main @autodoc"],
 	},
 
 	"display_current": {
@@ -114,7 +114,7 @@
 
 	"freqvec":{
 		"prefix": "freqvec",
-		"body": "w = 2π .* exp10.(LinRange(${1:-1}, ${2:log10(500)}, ${3:500}))$4"
+		"body": "w = exp10.(LinRange(${1:-2}, ${2:2}, ${3:200}))$4"
 	},
 
 	"logspace":{
@@ -209,16 +209,13 @@
 
 	"getproperty":{
 		"prefix": "getproperty",
-		"body": "function Base.getproperty($1, s::Symbol)\n
-		s ∈ fieldnames(typeof($1)) && return getfield($1, s)\n
-		if s === :$2\n
-		else\n
-			throw(ArgumentError(\"\$$1 has no property named \$s\"))\n
-		end\n
-	end\n"}
+		"body": "function Base.getproperty($1::$2, s::Symbol)\n	s ∈ fieldnames(typeof($1)) && return getfield($1, s)\n	if s === :$3\n	else\n		throw(ArgumentError(\"\\$(typeof($1)) has no property named \\$s\"))\n	end\nend\n"
 	},
 
-
+	"ntuple":{
+		"prefix": "ntuple",
+		"body": "ntuple(i->getfield(${1:object}, ${2:num_fields_removed}+i), fieldcount(typeof(${1:object}))-${2:num_fields_removed})..."
+	},
 
 
 }

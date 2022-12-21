@@ -35,7 +35,8 @@ using Optim, DSP, ForwardDiff, TotalLeastSquares
 # dtw(randn(Float32, 100), randn(Float32, 101))
 using StatsBase
 # using Turing
-using OrdinaryDiffEq
+# using OrdinaryDiffEq
+using ReverseDiff
 
 using JuliaFormatter
 JuliaFormatter.format(@__FILE__)
@@ -72,7 +73,8 @@ using PackageCompiler
         :GR,
         :JuliaFormatter,
         :Optim,
-        :OrdinaryDiffEq,
+        # :OrdinaryDiffEq,
+        :ReverseDiff,
         :Plots,
         :StaticArrays,
         :StatsBase,
